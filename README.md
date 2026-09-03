@@ -1,7 +1,9 @@
 # 🤖 AI Interviewer
 # Home page
+<img width="2936" height="1600" alt="image" src="https://github.com/user-attachments/assets/54d96e2e-932c-49ed-b748-33598077bded" />
 
 # Login page
+<img width="2940" height="1604" alt="image" src="https://github.com/user-attachments/assets/eefa4029-2ed4-42d7-8e81-1d0261678498" />
 
 # Dashboard
 ![alt text](image.png)
