@@ -1,4 +1,10 @@
 # 🤖 AI Interviewer
+# Home page
+
+# Login page
+
+# Dashboard
+![alt text](image.png)
 
 <div align="center">
 
