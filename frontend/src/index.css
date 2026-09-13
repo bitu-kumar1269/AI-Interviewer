@@ -3,24 +3,119 @@
 @tailwind utilities;
 
 @layer base {
+  :root,
+  html.dark {
+    color-scheme: dark;
+
+    /* Surface RGBs for Tailwind alpha support */
+    --color-surface-rgb: 8 10 18;
+    --color-surface-card-rgb: 14 18 34;
+    --color-surface-card-muted-rgb: 10 13 24;
+    --color-surface-border-rgb: 26 34 56;
+    --color-surface-border-light-rgb: 37 48 79;
+    --color-surface-hover-rgb: 20 26 48;
+    --color-surface-active-rgb: 28 36 68;
+
+    /* Base body colors */
+    --color-bg-body: #080a12;
+    --color-text-body: #e2e8f0;
+    --color-heading: #ffffff;
+    --color-muted: #94a3b8;
+
+    /* Cards */
+    --card-bg: rgba(14, 18, 34, 0.85);
+    --card-border: #1a2238;
+    --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 1px 1px rgba(255, 255, 255, 0.05);
+
+    /* Cockpit Cards */
+    --cockpit-bg-from: rgba(15, 20, 38, 0.95);
+    --cockpit-bg-to: rgba(11, 14, 27, 0.95);
+    --cockpit-border: #1d2642;
+
+    /* Form Fields */
+    --input-bg: rgba(8, 10, 18, 0.85);
+    --input-border: #1a2238;
+    --input-text: #ffffff;
+    --input-placeholder: #64748b;
+
+    /* Scrollbars & Dividers */
+    --scrollbar-track: #080a12;
+    --scrollbar-thumb: #1e2642;
+    --scrollbar-thumb-hover: #37446e;
+    --divider-color: #1a2238;
+    --progress-track: #141a30;
+  }
+
+  html.light {
+    color-scheme: light;
+
+    /* Surface RGBs for Tailwind alpha support */
+    --color-surface-rgb: 248 250 252;
+    --color-surface-card-rgb: 255 255 255;
+    --color-surface-card-muted-rgb: 241 245 249;
+    --color-surface-border-rgb: 226 232 240;
+    --color-surface-border-light-rgb: 203 213 225;
+    --color-surface-hover-rgb: 241 245 249;
+    --color-surface-active-rgb: 226 232 240;
+
+    /* Base body colors */
+    --color-bg-body: #f8fafc;
+    --color-text-body: #334155;
+    --color-heading: #0f172a;
+    --color-muted: #64748b;
+
+    /* Cards */
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --card-border: #e2e8f0;
+    --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 0 1px 1px rgba(0, 0, 0, 0.03);
+
+    /* Cockpit Cards */
+    --cockpit-bg-from: #ffffff;
+    --cockpit-bg-to: #f8fafc;
+    --cockpit-border: #e2e8f0;
+
+    /* Form Fields */
+    --input-bg: #ffffff;
+    --input-border: #cbd5e1;
+    --input-text: #0f172a;
+    --input-placeholder: #94a3b8;
+
+    /* Scrollbars & Dividers */
+    --scrollbar-track: #f1f5f9;
+    --scrollbar-thumb: #cbd5e1;
+    --scrollbar-thumb-hover: #94a3b8;
+    --divider-color: #e2e8f0;
+    --progress-track: #e2e8f0;
+  }
+
   * {
     box-sizing: border-box;
   }
 
   html {
     scroll-behavior: smooth;
-    color-scheme: dark;
   }
 
   body {
-    background-color: #080a12;
+    background-color: var(--color-bg-body);
+    color: var(--color-text-body);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  html.dark body {
     background-image: 
       radial-gradient(at 15% 10%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
       radial-gradient(at 85% 90%, rgba(6, 182, 212, 0.05) 0px, transparent 50%);
     background-attachment: fixed;
-    color: #e2e8f0;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    min-height: 100vh;
+  }
+
+  html.light body {
+    background-image: 
+      radial-gradient(at 15% 10%, rgba(99, 102, 241, 0.04) 0px, transparent 50%),
+      radial-gradient(at 85% 90%, rgba(6, 182, 212, 0.03) 0px, transparent 50%);
+    background-attachment: fixed;
   }
 
   ::-webkit-scrollbar {
@@ -28,14 +123,14 @@
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #080a12;
+    background: var(--scrollbar-track);
   }
   ::-webkit-scrollbar-thumb {
-    background: #1e2642;
+    background: var(--scrollbar-thumb);
     border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #37446e;
+    background: var(--scrollbar-thumb-hover);
   }
 
   ::selection {
@@ -55,35 +150,45 @@
   }
 
   .btn-secondary {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
     @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl
-           bg-[#0e1222]/90 border border-[#1a2238] text-slate-300 font-medium text-sm
-           hover:bg-[#141a30] hover:border-brand-500/40 hover:text-white
+           text-slate-700 dark:text-slate-300 font-medium text-sm
+           hover:bg-surface-hover hover:border-brand-500/40 hover:text-brand-600 dark:hover:text-white
            active:scale-95 transition-all duration-200;
   }
 
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg
-           text-slate-400 text-sm font-medium hover:text-white hover:bg-[#141a30]
+           text-slate-600 dark:text-slate-400 text-sm font-medium
+           hover:text-slate-900 dark:hover:text-white hover:bg-surface-hover
            transition-all duration-150;
   }
 
   .btn-danger {
     @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl
-           bg-rose-500/15 border border-rose-500/30 text-rose-300 font-medium text-sm
-           hover:bg-rose-500/25 hover:text-rose-200 transition-all duration-200;
+           bg-rose-500/15 border border-rose-500/30 text-rose-500 dark:text-rose-300 font-medium text-sm
+           hover:bg-rose-500/25 hover:text-rose-600 dark:hover:text-rose-200 transition-all duration-200;
   }
 
   /* ── Cards ───────────────────────────────────────── */
   .card {
-    @apply bg-[#0e1222]/80 backdrop-blur-md border border-[#1a2238] rounded-2xl shadow-card transition-all duration-200;
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    box-shadow: var(--card-shadow);
+    @apply backdrop-blur-md rounded-2xl transition-all duration-200;
   }
 
   .card-cockpit {
-    @apply bg-gradient-to-b from-[#0f1426]/90 to-[#0b0e1b]/90 backdrop-blur-xl border border-[#1d2642] rounded-2xl shadow-cockpit;
+    background: linear-gradient(180deg, var(--cockpit-bg-from) 0%, var(--cockpit-bg-to) 100%);
+    border: 1px solid var(--cockpit-border);
+    @apply backdrop-blur-xl rounded-2xl shadow-cockpit;
   }
 
   .card-glass {
-    @apply bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-2xl shadow-card;
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    @apply backdrop-blur-xl rounded-2xl shadow-card;
   }
 
   .card-hover {
@@ -92,14 +197,19 @@
 
   /* ── Form Fields ─────────────────────────────────── */
   .form-label {
-    @apply block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5;
+    @apply block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5;
   }
 
   .form-input {
-    @apply w-full px-4 py-2.5 rounded-xl bg-[#080a12]/80 border border-[#1a2238]
-           text-white placeholder-slate-500 text-sm
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--input-text);
+    @apply w-full px-4 py-2.5 rounded-xl text-sm
            focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500
            transition-all duration-200;
+  }
+  .form-input::placeholder {
+    color: var(--input-placeholder);
   }
 
   .form-textarea {
@@ -107,7 +217,7 @@
   }
 
   .form-error {
-    @apply text-rose-400 text-xs mt-1 font-medium;
+    @apply text-rose-500 dark:text-rose-400 text-xs mt-1 font-medium;
   }
 
   .form-select {
@@ -120,45 +230,46 @@
   }
 
   .badge-brand {
-    @apply badge bg-brand-500/15 text-brand-300 border border-brand-500/30;
+    @apply badge bg-brand-500/15 text-brand-600 dark:text-brand-300 border border-brand-500/30;
   }
 
   .badge-cyan {
-    @apply badge bg-cyan-500/15 text-cyan-300 border border-cyan-500/30;
+    @apply badge bg-cyan-500/15 text-cyan-600 dark:text-cyan-300 border border-cyan-500/30;
   }
 
   .badge-success {
-    @apply badge bg-emerald-500/15 text-emerald-300 border border-emerald-500/30;
+    @apply badge bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 border border-emerald-500/30;
   }
 
   .badge-warning {
-    @apply badge bg-amber-500/15 text-amber-300 border border-amber-500/30;
+    @apply badge bg-amber-500/15 text-amber-600 dark:text-amber-300 border border-amber-500/30;
   }
 
   .badge-danger {
-    @apply badge bg-rose-500/15 text-rose-300 border border-rose-500/30;
+    @apply badge bg-rose-500/15 text-rose-600 dark:text-rose-300 border border-rose-500/30;
   }
 
   .badge-slate {
-    @apply badge bg-slate-500/15 text-slate-300 border border-slate-500/30;
+    @apply badge bg-slate-500/15 text-slate-700 dark:text-slate-300 border border-slate-500/30;
   }
 
   /* ── Gradient Text ───────────────────────────────── */
   .gradient-text {
-    @apply bg-gradient-to-r from-brand-300 via-violet-300 to-cyan-300 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-brand-600 via-violet-600 to-cyan-600 dark:from-brand-300 dark:via-violet-300 dark:to-cyan-300 bg-clip-text text-transparent;
   }
 
   .gradient-text-cyan {
-    @apply bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent;
   }
 
   .gradient-text-violet {
-    @apply bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-violet-600 to-fuchsia-600 dark:from-violet-400 dark:to-fuchsia-400 bg-clip-text text-transparent;
   }
 
   /* ── Progress Bar ────────────────────────────────── */
   .progress-bar {
-    @apply h-2 rounded-full bg-[#141a30] overflow-hidden;
+    background-color: var(--progress-track);
+    @apply h-2 rounded-full overflow-hidden;
   }
 
   .progress-fill {
@@ -167,6 +278,112 @@
 
   /* ── Section Divider ─────────────────────────────── */
   .divider {
-    @apply border-t border-[#1a2238] my-6;
+    border-color: var(--divider-color);
+    @apply border-t my-6;
+  }
+}
+
+/* ── Light Mode Global Typography & Overrides ───────────────────── */
+html.light {
+  /* Ensure headings are high-contrast dark text in light mode */
+  h1:not([class*="gradient-text"]):not(.btn-primary *),
+  h2:not([class*="gradient-text"]):not(.btn-primary *),
+  h3:not([class*="gradient-text"]):not(.btn-primary *),
+  h4:not([class*="gradient-text"]):not(.btn-primary *),
+  h5:not([class*="gradient-text"]):not(.btn-primary *) {
+    color: #0f172a;
+  }
+
+  /* Elements with text-white in light mode (protect buttons, badges, avatars) */
+  [class~="text-white"]:not(
+    .btn-primary,
+    .btn-primary *,
+    .btn-danger,
+    .btn-danger *,
+    .badge-brand,
+    .badge-cyan,
+    .badge-success,
+    .badge-warning,
+    .badge-danger,
+    .gradient-text,
+    .gradient-text *,
+    [class*="bg-gradient-brand"],
+    [class*="bg-gradient-brand"] *,
+    [class*="bg-brand-6"],
+    [class*="bg-brand-6"] *,
+    [class*="bg-violet-6"],
+    [class*="bg-violet-6"] *,
+    [class*="bg-emerald-6"],
+    [class*="bg-emerald-6"] *,
+    [class*="bg-rose-5"],
+    [class*="bg-rose-5"] *,
+    [class*="bg-rose-6"],
+    [class*="bg-rose-6"] *,
+    .keep-white,
+    .keep-white *
+  ) {
+    color: #0f172a !important;
+  }
+
+  /* Slate muted text contrast adjustments for light theme */
+  [class~="text-slate-200"],
+  [class~="text-slate-300"] {
+    color: #334155 !important;
+  }
+  [class~="text-slate-400"] {
+    color: #64748b !important;
+  }
+
+  /* In light mode, map arbitrary dark hex containers to clean light surfaces */
+  .bg-\[\#090c17\],
+  .bg-\[\#090c17\]\/95,
+  .bg-\[\#080a12\],
+  .bg-\[\#080a12\]\/80,
+  .bg-\[\#0e1222\],
+  .bg-\[\#0e1222\]\/80,
+  .bg-\[\#0e1222\]\/90,
+  .bg-\[\#070913\],
+  .bg-\[\#0b0e1a\],
+  .bg-\[\#080814\],
+  .bg-\[\#0c0c1d\],
+  .bg-\[\#0c0c1e\],
+  .bg-\[\#14142a\],
+  .bg-\[\#121225\],
+  .bg-\[\#12122a\],
+  .bg-\[\#0f0f1e\],
+  .bg-\[\#0f0f22\]\/30,
+  .bg-\[\#0f0f22\]\/50,
+  .bg-\[\#0f0f22\]\/60 {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+  }
+
+  /* Borders that were hardcoded dark */
+  .border-\[\#1a2238\],
+  .border-\[\#192238\],
+  .border-\[\#161d33\],
+  .border-\[\#1d2642\],
+  .border-white\/\[0\.06\],
+  .border-white\/\[0\.07\],
+  .border-white\/\[0\.08\],
+  .border-white\/10 {
+    border-color: #e2e8f0 !important;
+  }
+
+  /* Hover states */
+  .hover\:bg-\[\#141a30\]:hover,
+  .hover\:bg-\[\#141b2f\]:hover,
+  .hover\:bg-\[\#12172b\]\/80:hover {
+    background-color: #f1f5f9 !important;
+  }
+
+  /* Auth form inputs */
+  .bg-\[\#080d1a\]\/85 {
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    color: #0f172a !important;
+  }
+  .bg-\[\#080d1a\]\/85::placeholder {
+    color: #94a3b8 !important;
   }
 }

@@ -43,4 +43,42 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
 });
 
+// Ensure uploads/avatars directory exists
+const avatarUploadDir = path.join(__dirname, '../../uploads/avatars');
+if (!fs.existsSync(avatarUploadDir)) {
+  fs.mkdirSync(avatarUploadDir, { recursive: true });
+}
+
+const avatarStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, avatarUploadDir);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1E9)}`;
+    const ext = path.extname(file.originalname).toLowerCase() || '.jpg';
+    cb(null, `avatar-${uniqueSuffix}${ext}`);
+  },
+});
+
+const avatarFileFilter = (req, file, cb) => {
+  const allowedMimes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
+  const allowedExts = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
+  const ext = path.extname(file.originalname).toLowerCase();
+
+  if (allowedMimes.includes(file.mimetype) || allowedExts.includes(ext)) {
+    cb(null, true);
+  } else {
+    cb(new AppError('Only image files (JPG, PNG, WebP, GIF) are allowed for profile photo.', 400), false);
+  }
+};
+
+const avatarUpload = multer({
+  storage: avatarStorage,
+  fileFilter: avatarFileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+});
+
 module.exports = upload;
+module.exports.upload = upload;
+module.exports.resumeUpload = upload;
+module.exports.avatarUpload = avatarUpload;

@@ -89,7 +89,7 @@ Return structured JSON exactly in this format:
 }`;
 
   const response = await groq.chat.completions.create({
-    model: 'llama-3.3-70b-versatile',
+    model: 'openai/gpt-oss-120b',
     messages: [
       { role: 'system', content: systemPrompt },
       { role: 'user', content: userPrompt },
@@ -173,7 +173,7 @@ Return valid JSON exactly in this format:
   });
 
   const response = await groq.chat.completions.create({
-    model: 'llama-3.3-70b-versatile',
+    model: 'openai/gpt-oss-120b',
     messages: [{ role: 'user', content: prompt }],
     temperature: 0.4,
     max_tokens: 512,
@@ -211,7 +211,7 @@ Respond with valid JSON exacty in this format:
   const prompt      = formatPrompt(rawTemplate, { jobTitle, summary });
 
   const response = await groq.chat.completions.create({
-    model: 'llama-3.3-70b-versatile',
+    model: 'openai/gpt-oss-120b',
     messages: [{ role: 'user', content: prompt }],
     temperature: 0.5,
     max_tokens: 1024,
@@ -261,7 +261,7 @@ JOB_DESCRIPTION:
 ${jdText || 'Not provided'}`;
 
   const response = await groq.chat.completions.create({
-    model: 'llama-3.3-70b-versatile',
+    model: 'openai/gpt-oss-120b',
     messages: [
       { role: 'system', content: systemPrompt },
       { role: 'user', content: userPrompt },
@@ -322,7 +322,7 @@ Output:
 Numbered list of questions.`;
 
   const response = await groq.chat.completions.create({
-    model: 'llama-3.3-70b-versatile',
+    model: 'openai/gpt-oss-120b',
     messages: [
       { role: 'system', content: systemPrompt },
       { role: 'user', content: userPrompt },
@@ -374,7 +374,7 @@ Return JSON exactly as:
 }`;
 
   const response = await groq.chat.completions.create({
-    model: 'llama-3.3-70b-versatile',
+    model: 'openai/gpt-oss-120b',
     messages: [
       { role: 'system', content: systemPrompt },
       { role: 'user', content: userPrompt },
@@ -424,7 +424,7 @@ Output:
 Single follow-up question.`;
 
   const response = await groq.chat.completions.create({
-    model: 'llama-3.3-70b-versatile',
+    model: 'openai/gpt-oss-120b',
     messages: [
       { role: 'system', content: systemPrompt },
       { role: 'user', content: userPrompt },
@@ -471,7 +471,7 @@ Return JSON exactly as:
 }`;
 
   const response = await groq.chat.completions.create({
-    model: 'llama-3.3-70b-versatile',
+    model: 'openai/gpt-oss-120b',
     messages: [
       { role: 'system', content: systemPrompt },
       { role: 'user', content: userPrompt },
@@ -515,7 +515,7 @@ Response:
 ${modelOutput}`;
 
   const response = await groq.chat.completions.create({
-    model: 'llama-3.3-70b-versatile',
+    model: 'openai/gpt-oss-120b',
     messages: [
       { role: 'system', content: systemPrompt },
       { role: 'user', content: userPrompt },
@@ -583,7 +583,7 @@ Job Description:
 ${jobDescription}`;
 
   const response = await groq.chat.completions.create({
-    model: 'llama-3.3-70b-versatile',
+    model: 'openai/gpt-oss-120b',
     messages: [
       { role: 'system', content: systemPrompt },
       { role: 'user', content: userPrompt },

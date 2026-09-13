@@ -12,18 +12,20 @@
  *  onDarkToggle — fn       — toggles dark mode
  */
 
-import { Menu, Sun, Moon } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import Breadcrumb            from './Breadcrumb';
 import NotificationDropdown  from './NotificationDropdown';
 import UserMenu              from './UserMenu';
+import { ThemeToggle }       from '@/components/common';
 
-export default function AdminTopbar({ onMenuClick, darkMode, onDarkToggle }) {
+export default function AdminTopbar({ onMenuClick }) {
   return (
     <header className="
       flex items-center justify-between
       px-4 lg:px-6 h-16 flex-shrink-0
-      bg-[#0c0c1d]/90 backdrop-blur-md
-      border-b border-white/[0.07]
+      bg-surface-card/90 backdrop-blur-md
+      border-b border-surface-border
+      transition-colors duration-200
     ">
 
       {/* ── Left section ──────────────────────────────────────── */}
@@ -32,9 +34,9 @@ export default function AdminTopbar({ onMenuClick, darkMode, onDarkToggle }) {
         <button
           id="admin-mobile-menu-btn"
           onClick={onMenuClick}
-          className="lg:hidden w-9 h-9 rounded-xl bg-white/5 border border-white/8
-                     flex items-center justify-center text-slate-400
-                     hover:text-white hover:bg-white/10 transition-all"
+          className="lg:hidden w-9 h-9 rounded-xl bg-surface-hover border border-surface-border
+                     flex items-center justify-center text-slate-500 dark:text-slate-400
+                     hover:text-slate-900 dark:hover:text-white transition-all"
           aria-label="Open sidebar"
         >
           <Menu size={18} />
@@ -47,22 +49,8 @@ export default function AdminTopbar({ onMenuClick, darkMode, onDarkToggle }) {
       {/* ── Right section ─────────────────────────────────────── */}
       <div className="flex items-center gap-2">
 
-        {/* Dark mode toggle */}
-        <button
-          id="admin-dark-mode-btn"
-          onClick={onDarkToggle}
-          className="w-9 h-9 rounded-xl bg-white/5 border border-white/8
-                     flex items-center justify-center text-slate-400
-                     hover:text-white hover:bg-white/10 hover:border-white/15
-                     transition-all duration-200"
-          aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-          title={darkMode ? 'Light mode' : 'Dark mode'}
-        >
-          {darkMode
-            ? <Sun size={16} className="text-amber-400" />
-            : <Moon size={16} />
-          }
-        </button>
+        {/* Theme toggle */}
+        <ThemeToggle />
 
         {/* Notification bell */}
         <NotificationDropdown />

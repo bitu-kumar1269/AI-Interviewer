@@ -27,6 +27,7 @@ const interviewRoutes = require('./routes/interview.routes');
 const sessionRoutes   = require('./routes/session.routes');
 const jobsRoutes      = require('./routes/jobs.routes');
 const adminRoutes     = require('./routes/admin.routes');
+const oauthRoutes     = require('./routes/oauth.routes');
 
 const app = express();
 
@@ -109,6 +110,7 @@ app.use('/api/interviews', interviewRoutes);
 app.use('/api/sessions',   sessionRoutes);
 app.use('/api/jobs',       jobsRoutes);
 app.use('/api/admin',      adminRoutes);
+app.use('/api/auth',       oauthRoutes);
 
 // ─── 404 Catch-all ────────────────────────────────────────────────
 app.use('*', (req, res) =>

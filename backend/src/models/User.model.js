@@ -20,9 +20,33 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, 'Password is required'],
+      required: function () {
+        // Password is only required for accounts that signed up with email/password.
+        // OAuth-created accounts (Google/GitHub/LinkedIn) have no password.
+        return !this.googleId && !this.githubId && !this.linkedinId;
+      },
       minlength: [8, 'Password must be at least 8 characters'],
       select: false,
+    },
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true,
+    },
+    githubId: {
+      type: String,
+      unique: true,
+      sparse: true,
+    },
+    linkedinId: {
+      type: String,
+      unique: true,
+      sparse: true,
+    },
+    authProvider: {
+      type: String,
+      enum: ['local', 'google', 'github', 'linkedin'],
+      default: 'local',
     },
     role: {
       type: String,
@@ -32,6 +56,31 @@ const userSchema = new mongoose.Schema(
     avatar: {
       type: String,
       default: null,
+    },
+    bio: {
+      type: String,
+      default: '',
+      maxlength: [1000, 'Bio cannot exceed 1000 characters'],
+    },
+    summary: {
+      type: String,
+      default: '',
+      maxlength: [1000, 'Summary cannot exceed 1000 characters'],
+    },
+    linkedin: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    github: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    leetcode: {
+      type: String,
+      default: '',
+      trim: true,
     },
     isActive: {
       type: Boolean,

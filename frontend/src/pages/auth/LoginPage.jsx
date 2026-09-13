@@ -1,14 +1,26 @@
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff, Loader2, Bot, Sparkles } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/store/authStore';
+import SocialLoginButtons from '@/components/auth/SocialLoginButtons';
 import toast from 'react-hot-toast';
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const { login, isLoading } = useAuthStore();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    const oauthError = searchParams.get('oauthError');
+    if (oauthError) {
+      toast.error(oauthError);
+      searchParams.delete('oauthError');
+      setSearchParams(searchParams, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -97,6 +109,8 @@ export default function LoginPage() {
           <span>{isLoading ? 'Authenticating...' : 'Sign In'}</span>
         </button>
       </form>
+
+      <SocialLoginButtons />
 
       <p className="mt-6 text-center text-xs text-slate-400">
         Don&apos;t have an account?{' '}

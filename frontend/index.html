@@ -10,8 +10,26 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('theme');
+          var adminSaved = localStorage.getItem('admin-dark-mode');
+          var isLight = saved === 'light' || (adminSaved && JSON.parse(adminSaved) === false);
+          if (isLight) {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+            document.documentElement.style.colorScheme = 'light';
+          } else {
+            document.documentElement.classList.remove('light');
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.colorScheme = 'dark';
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
-  <body class="bg-surface text-white antialiased">
+  <body class="bg-surface antialiased">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

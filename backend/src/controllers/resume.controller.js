@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const pdf = require('pdf-parse');
+const pdfParseModule = require('pdf-parse');
 const Resume = require('../models/Resume.model');
 const cloudinary = require('../config/cloudinary');
 const AppError = require('../utils/AppError');
@@ -8,6 +8,29 @@ const { parseResumeAndJD } = require('../services/ai.service');
 const { chunkDocument, chunkResumeAndJD, estimateTokens } = require('../services/chunking.service');
 const { normalizeText } = require('../utils/normalizer');
 
+/**
+ * Robust text extractor supporting both pdf-parse v1 (function)
+ * and pdf-parse v2+ ({ PDFParse } class)
+ */
+async function extractTextFromPdfBuffer(buffer) {
+  if (typeof pdfParseModule === 'function') {
+    const res = await pdfParseModule(buffer);
+    return res.text;
+  }
+  if (pdfParseModule.PDFParse) {
+    const parser = new pdfParseModule.PDFParse({ data: buffer });
+    const res = await parser.getText();
+    if (typeof parser.destroy === 'function') {
+      await parser.destroy();
+    }
+    return res.text;
+  }
+  if (pdfParseModule.default && typeof pdfParseModule.default === 'function') {
+    const res = await pdfParseModule.default(buffer);
+    return res.text;
+  }
+  throw new Error('Unsupported pdf-parse export');
+}
 
 // ─── POST /api/resumes/upload ─────────────────────────────────────
 exports.uploadResume = async (req, res, next) => {
@@ -26,14 +49,30 @@ exports.uploadResume = async (req, res, next) => {
   if (process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET) {
     try {
       const uploadResult = await new Promise((resolve, reject) => {
+        let settled = false;
+        const safeReject = (err) => {
+          if (!settled) {
+            settled = true;
+            reject(err);
+          }
+        };
+        const safeResolve = (res) => {
+          if (!settled) {
+            settled = true;
+            resolve(res);
+          }
+        };
         const stream = cloudinary.uploader.upload_stream(
           { folder: 'ai-interview/resumes', resource_type: 'auto', public_id: `resume-${Date.now()}` },
           (error, result) => {
-            if (error) reject(error);
-            else resolve(result);
+            if (error) safeReject(error);
+            else safeResolve(result);
           }
         );
-        fs.createReadStream(localFilePath).pipe(stream);
+        stream.on('error', safeReject);
+        const readStream = fs.createReadStream(localFilePath);
+        readStream.on('error', safeReject);
+        readStream.pipe(stream);
       });
       if (uploadResult && uploadResult.secure_url) {
         fileUrl = uploadResult.secure_url;
@@ -51,9 +90,9 @@ exports.uploadResume = async (req, res, next) => {
   try {
     if (mimetype === 'application/pdf' || (originalname && originalname.toLowerCase().endsWith('.pdf'))) {
       const buffer = fs.readFileSync(localFilePath);
-      const pdfData = await pdf(buffer);
-      extractedText = pdfData.text?.slice(0, 8000) ?? null; // Limit to 8k chars
-      parseStatus = 'parsed';
+      const rawText = await extractTextFromPdfBuffer(buffer);
+      extractedText = rawText?.slice(0, 8000) ?? null; // Limit to 8k chars
+      parseStatus = extractedText ? 'parsed' : 'failed';
     }
   } catch (err) {
     console.warn('[ResumeUpload] PDF text extraction error:', err.message);
@@ -150,6 +189,22 @@ exports.parseResume = async (req, res, next) => {
   const resume = await Resume.findOne({ _id: req.params.id, userId: req.user._id });
   if (!resume) return next(new AppError('Resume not found.', 404));
 
+  // Self-heal: if extractedText is missing, try reading local file and extracting
+  if (!resume.extractedText && resume.fileName) {
+    const localPath = path.join(__dirname, '../../uploads/resumes', resume.fileName);
+    if (fs.existsSync(localPath)) {
+      try {
+        const buffer = fs.readFileSync(localPath);
+        const rawText = await extractTextFromPdfBuffer(buffer);
+        resume.extractedText = rawText?.slice(0, 8000) ?? null;
+        resume.parseStatus = resume.extractedText ? 'parsed' : 'failed';
+        await resume.save();
+      } catch (extractErr) {
+        console.warn('[ResumeParse] Failed to re-extract text:', extractErr.message);
+      }
+    }
+  }
+
   if (!resume.extractedText) {
     return next(new AppError('No text extracted from this resume. Upload a valid PDF.', 400));
   }
@@ -160,6 +215,7 @@ exports.parseResume = async (req, res, next) => {
     const parsedData = await parseResumeAndJD(resume.extractedText, jdText);
     resume.parsedData = parsedData;
     resume.isParsed = true;
+    resume.parseStatus = 'parsed';
     await resume.save();
 
     res.status(200).json({ success: true, parsedData });

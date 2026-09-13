@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { BrainCircuit, Sparkles, FileText, BarChart3, ArrowRight, CheckCircle, Briefcase } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
+import { ThemeToggle } from '@/components/common';
 
 const FEATURES = [
   {
@@ -65,6 +66,7 @@ export default function LandingPage() {
                 <Link to="/register" className="btn-primary">Get Started Free</Link>
               </>
             )}
+            <ThemeToggle />
           </div>
         </div>
       </nav>

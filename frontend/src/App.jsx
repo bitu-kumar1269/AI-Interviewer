@@ -28,6 +28,7 @@ import AdminLayout     from '@/layouts/AdminLayout';
 import LandingPage          from '@/pages/LandingPage';
 import LoginPage            from '@/pages/auth/LoginPage';
 import RegisterPage         from '@/pages/auth/RegisterPage';
+import OAuthCallbackPage    from '@/pages/auth/OAuthCallbackPage';
 import DashboardPage        from '@/pages/dashboard/DashboardPage';
 import NewInterviewPage     from '@/pages/interview/NewInterviewPage';
 import InterviewListPage    from '@/pages/interview/InterviewListPage';
@@ -126,6 +127,7 @@ export default function App() {
           path="/register"
           element={<GuestRoute><RegisterPage /></GuestRoute>}
         />
+        <Route path="/oauth-callback" element={<OAuthCallbackPage />} />
       </Route>
 
       {/* ── Admin Login (guest-only for admins) ──── */}

@@ -50,6 +50,20 @@ export const useAuthStore = create(
         }
       },
 
+      // Used by /oauth-callback after a successful social sign-in.
+      // Stores the tokens issued by the backend, then fetches the user profile.
+      loginWithTokens: async ({ accessToken, refreshToken }) => {
+        set({ accessToken, refreshToken, isAuthenticated: true, isLoading: true });
+        try {
+          const { data } = await api.get('/auth/me');
+          set({ user: data.user, isLoading: false });
+          return { success: true };
+        } catch (err) {
+          set({ isLoading: false });
+          return { success: false, message: err.response?.data?.message || 'Failed to load profile' };
+        }
+      },
+
       logout: () => {
         set({
           user: null,

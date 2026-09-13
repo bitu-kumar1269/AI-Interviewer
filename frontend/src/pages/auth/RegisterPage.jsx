@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { User, Mail, Lock, Eye, EyeOff, Loader2, Bot, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { useAuthStore } from '@/store/authStore';
+import SocialLoginButtons from '@/components/auth/SocialLoginButtons';
 import toast from 'react-hot-toast';
 
 export default function RegisterPage() {
@@ -143,6 +144,8 @@ export default function RegisterPage() {
           <span>{isLoading ? 'Creating Account...' : 'Create Account'}</span>
         </button>
       </form>
+
+      <SocialLoginButtons />
 
       <p className="mt-5 text-center text-xs text-slate-400">
         Already have an account?{' '}

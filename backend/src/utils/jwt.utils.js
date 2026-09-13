@@ -31,6 +31,11 @@ const sendTokenResponse = (user, statusCode, res) => {
     email: user.email,
     role: user.role,
     avatar: user.avatar,
+    bio: user.bio || '',
+    summary: user.summary || '',
+    linkedin: user.linkedin || '',
+    github: user.github || '',
+    leetcode: user.leetcode || '',
     totalSessions: user.totalSessions,
     createdAt: user.createdAt,
   };

@@ -20,6 +20,7 @@
 import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useAppContext } from '@/context';
 
 import AdminSidebar   from '@/components/admin/sidebar/AdminSidebar';
 import MobileDrawer   from '@/components/admin/sidebar/MobileDrawer';
@@ -36,18 +37,15 @@ const getStored = (key, fallback) => {
 };
 
 export default function AdminLayout() {
+  const { isDark: darkMode, toggleTheme } = useAppContext();
   const [collapsed,   setCollapsed]   = useState(() => getStored('admin-sidebar-collapsed', false));
   const [mobileOpen,  setMobileOpen]  = useState(false);
-  const [darkMode,    setDarkMode]    = useState(() => getStored('admin-dark-mode', true));
 
   // Persist preferences
   useEffect(() => {
     localStorage.setItem('admin-sidebar-collapsed', JSON.stringify(collapsed));
   }, [collapsed]);
 
-  useEffect(() => {
-    localStorage.setItem('admin-dark-mode', JSON.stringify(darkMode));
-  }, [darkMode]);
 
   // Close mobile drawer on resize to lg+
   useEffect(() => {
@@ -120,7 +118,7 @@ export default function AdminLayout() {
         <AdminTopbar
           onMenuClick={() => setMobileOpen(true)}
           darkMode={darkMode}
-          onDarkToggle={() => setDarkMode(!darkMode)}
+          onDarkToggle={toggleTheme}
         />
 
         {/* Page content — scrollable */}
