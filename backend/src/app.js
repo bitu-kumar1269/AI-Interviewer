@@ -35,7 +35,19 @@ const app = express();
 connectDB();
 
 // ─── Security Headers ─────────────────────────────────────────────
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' }, // allow images to be loaded cross-origin
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        imgSrc: ["'self'", 'data:', 'blob:', 'http:', 'https:'], // allow images from any origin
+        scriptSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+      },
+    },
+  })
+);
 
 // ─── Gzip Compression ─────────────────────────────────────────────
 // Compresses all JSON/text responses above the threshold.

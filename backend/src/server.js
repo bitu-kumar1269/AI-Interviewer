@@ -43,10 +43,14 @@ const io = initSocket(server);
 // ─── Graceful Shutdown: unhandled promise rejections ──────────────
 process.on('unhandledRejection', (err) => {
   logger.error(`💥 Unhandled Rejection: ${err.name} — ${err.message}`);
-  server.close(() => {
-    logger.warn('Server closed after unhandledRejection. Exiting...');
-    process.exit(1);
-  });
+  if (process.env.NODE_ENV === 'production') {
+    server.close(() => {
+      logger.warn('Server closed after unhandledRejection. Exiting...');
+      process.exit(1);
+    });
+  } else {
+    logger.warn('[dev] Unhandled rejection ignored in development — server stays up.');
+  }
 });
 
 // ─── Graceful Shutdown: uncaught sync exceptions ──────────────────
