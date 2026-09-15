@@ -1,12 +1,17 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   BrainCircuit, Sparkles, FileText, BarChart3, ArrowRight,
-  Briefcase, Mic, Radio, Volume2, Cpu,
+  Briefcase, Mic, Radio, Volume2, Cpu, Check, X,
+  HelpCircle, ChevronDown, Award, Zap, Shield, Target,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import { ThemeToggle } from '@/components/common';
 import AiVoiceInterviewShowcase from '@/components/home/AiVoiceInterviewShowcase';
+import CompanyMarquee from '@/components/home/CompanyMarquee';
+import SkillsMarquee from '@/components/home/SkillsMarquee';
+import StudentReviews from '@/components/home/StudentReviews';
 
 const FEATURES = [
   {
@@ -35,14 +40,77 @@ const FEATURES = [
   },
 ];
 
+const COMPARISONS = [
+  {
+    feature: 'Available 24/7 on Demand',
+    interviewAI: true,
+    humanMocks: false,
+    textOnlyAI: true,
+  },
+  {
+    feature: 'Real-time Spoken 3D Voice & Audio',
+    interviewAI: true,
+    humanMocks: true,
+    textOnlyAI: false,
+  },
+  {
+    feature: 'Resume & Job Description Tailoring',
+    interviewAI: true,
+    humanMocks: 'Varies',
+    textOnlyAI: 'Basic',
+  },
+  {
+    feature: 'Instant ATS Keyword & STAR Scoring',
+    interviewAI: true,
+    humanMocks: false,
+    textOnlyAI: 'Delayed',
+  },
+  {
+    feature: 'Cost per Mock Session',
+    interviewAI: 'Free to Start',
+    humanMocks: '$150 - $300 / hr',
+    textOnlyAI: 'Subscription',
+  },
+  {
+    feature: 'Zero Judgment, Unlimited Retakes',
+    interviewAI: true,
+    humanMocks: false,
+    textOnlyAI: true,
+  },
+];
+
 const STEPS = [
-  { step: '01', title: 'Create Account', desc: 'Sign up in seconds — no credit card required.' },
-  { step: '02', title: 'Set Up Interview', desc: 'Enter the job description, select experience level & question types.' },
-  { step: '03', title: 'Practice & Improve', desc: 'Answer questions and get AI-powered feedback instantly.' },
+  { step: '01', title: 'Create Account & Upload Resume', desc: 'Sign up in seconds and parse your tech stack, projects, and experience automatically.' },
+  { step: '02', title: 'Pick Job Description & Skills', desc: 'Target any software role, select experience level, and choose voice or text mode.' },
+  { step: '03', title: 'Practice & Get Hired', desc: 'Answer questions with live AI coaching, refine answers, and ace your real interviews.' },
+];
+
+const FAQS = [
+  {
+    q: 'How does the 3D AI Voice Interviewer work?',
+    a: 'Our platform uses Web Speech recognition to transcribe your answers in real time, passes them to a low-latency Groq Llama-3 model for deep technical analysis, and responds with dynamic neural voice synthesis accompanied by 3D audio-reactive avatar animations.',
+  },
+  {
+    q: 'Can I practice interviews for my specific tech stack?',
+    a: 'Yes! We support 60+ programming languages, frameworks, databases, and cloud platforms — including React, Python, Go, Java, TypeScript, AWS, Kubernetes, and System Design. You can also paste any custom Job Description for hyper-targeted questions.',
+  },
+  {
+    q: 'How does the Resume ATS Scoring work?',
+    a: 'When you upload your resume (PDF/DOCX), our engine extracts your skills, work history, and achievements. It compares your resume against target job requirements, highlighting missing keywords, match percentage, and customized interview drills.',
+  },
+  {
+    q: 'Is this free to use for students and job seekers?',
+    a: 'Yes! You can get started immediately with free mock sessions and full access to voice simulation. No credit card required.',
+  },
+  {
+    q: 'What formats of interview questions are supported?',
+    a: 'We support Coding & Algorithm questions, Distributed System Design, Behavioral & Leadership (STAR method), Framework Deep-Dives, and Live Debugging scenarios.',
+  },
 ];
 
 export default function LandingPage() {
   const { isAuthenticated } = useAuthStore();
+  const [openFaq, setOpenFaq] = useState(null);
 
   return (
     <div className="min-h-screen bg-surface overflow-x-hidden">
@@ -58,6 +126,18 @@ export default function LandingPage() {
 
           {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center gap-8">
+            <a href="#skills-section" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">
+              Skills
+            </a>
+            <a href="#features-section" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">
+              Features
+            </a>
+            <a href="#reviews-section" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">
+              Reviews
+            </a>
+            <a href="#faq-section" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">
+              FAQ
+            </a>
             <Link to="/jobs" className="text-sm font-medium text-slate-400 hover:text-white transition-colors flex items-center gap-2">
               <Briefcase className="w-4 h-4" />
               Jobs
@@ -82,7 +162,7 @@ export default function LandingPage() {
       </nav>
 
       {/* ── Hero ─────────────────────────────────────────────────── */}
-      <section className="relative pt-28 pb-20 px-6 overflow-hidden">
+      <section className="relative pt-28 pb-16 px-6 overflow-hidden">
         {/* Glowing ambient light orbs */}
         <div className="absolute top-16 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-brand-500/15 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute top-36 right-1/4 w-80 h-80 bg-accent-600/15 rounded-full blur-3xl pointer-events-none" />
@@ -133,15 +213,27 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── Companies Marquee ─────────────────────────────────────── */}
+      <CompanyMarquee />
+
+      {/* ── Flowing Skills Marquee ─────────────────────────────────── */}
+      <div id="skills-section">
+        <SkillsMarquee />
+      </div>
+
       {/* ── Features ─────────────────────────────────────────────── */}
-      <section className="py-20 px-6">
+      <section id="features-section" className="py-24 px-6">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-semibold uppercase tracking-wider mb-4">
+              <Zap className="w-3.5 h-3.5" />
+              Platform Capabilities
+            </div>
             <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-4">
               Everything you need to <span className="gradient-text">prepare</span>
             </h2>
             <p className="text-slate-400 max-w-xl mx-auto">
-              A complete AI interview prep platform with interactive 3D simulations and conversational intelligence.
+              A complete AI interview prep platform with interactive 3D simulations, real-time voice feedback, and deep algorithmic evaluation.
             </p>
           </div>
 
@@ -168,14 +260,109 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── How It Works ─────────────────────────────────────────── */}
-      <section className="py-20 px-6 bg-surface-card border-y border-surface-border">
+      {/* ── Why Us / Comparison Matrix ────────────────────────────── */}
+      <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-14">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-500/10 border border-accent-500/20 text-accent-400 text-xs font-semibold uppercase tracking-wider mb-4">
+              <Shield className="w-3.5 h-3.5" />
+              The Smart Way to Practice
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-4">
+              Why Choose <span className="gradient-text">InterviewAI</span>?
+            </h2>
+            <p className="text-slate-400 max-w-lg mx-auto text-sm sm:text-base">
+              Compare how our interactive 3D platform outperforms expensive human coaches and basic text chatbots.
+            </p>
+          </div>
+
+          <div className="overflow-x-auto rounded-2xl border border-surface-border bg-surface-card shadow-card">
+            <table className="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr className="border-b border-surface-border bg-surface-card-muted">
+                  <th className="py-4 px-6 text-slate-300 font-semibold">Key Capabilities</th>
+                  <th className="py-4 px-6 text-teal-400 font-bold bg-brand-500/10 text-center">
+                    InterviewAI (3D Voice)
+                  </th>
+                  <th className="py-4 px-6 text-slate-400 font-medium text-center">
+                    Human Mock Coach
+                  </th>
+                  <th className="py-4 px-6 text-slate-400 font-medium text-center">
+                    Generic Text AI
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-surface-border">
+                {COMPARISONS.map((row, idx) => (
+                  <tr key={idx} className="hover:bg-surface-hover/50 transition-colors">
+                    <td className="py-4 px-6 font-medium text-slate-200">
+                      {row.feature}
+                    </td>
+                    <td className="py-4 px-6 bg-brand-500/[0.04] text-center">
+                      {typeof row.interviewAI === 'boolean' ? (
+                        row.interviewAI ? (
+                          <span className="inline-flex p-1 rounded-full bg-emerald-500/15 text-emerald-400">
+                            <Check className="w-4 h-4 font-bold" />
+                          </span>
+                        ) : (
+                          <span className="inline-flex p-1 rounded-full bg-rose-500/15 text-rose-400">
+                            <X className="w-4 h-4" />
+                          </span>
+                        )
+                      ) : (
+                        <span className="font-semibold text-emerald-400">{row.interviewAI}</span>
+                      )}
+                    </td>
+                    <td className="py-4 px-6 text-center text-slate-400">
+                      {typeof row.humanMocks === 'boolean' ? (
+                        row.humanMocks ? (
+                          <span className="inline-flex p-1 rounded-full bg-emerald-500/15 text-emerald-400">
+                            <Check className="w-4 h-4" />
+                          </span>
+                        ) : (
+                          <span className="inline-flex p-1 rounded-full bg-rose-500/15 text-rose-400">
+                            <X className="w-4 h-4" />
+                          </span>
+                        )
+                      ) : (
+                        <span className="text-slate-400">{row.humanMocks}</span>
+                      )}
+                    </td>
+                    <td className="py-4 px-6 text-center text-slate-400">
+                      {typeof row.textOnlyAI === 'boolean' ? (
+                        row.textOnlyAI ? (
+                          <span className="inline-flex p-1 rounded-full bg-emerald-500/15 text-emerald-400">
+                            <Check className="w-4 h-4" />
+                          </span>
+                        ) : (
+                          <span className="inline-flex p-1 rounded-full bg-rose-500/15 text-rose-400">
+                            <X className="w-4 h-4" />
+                          </span>
+                        )
+                      ) : (
+                        <span className="text-slate-400">{row.textOnlyAI}</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* ── How It Works ─────────────────────────────────────────── */}
+      <section className="py-24 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-semibold uppercase tracking-wider mb-4">
+              <Target className="w-3.5 h-3.5" />
+              Simple Workflow
+            </div>
             <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-4">
               From zero to <span className="gradient-text">interview-ready</span>
             </h2>
-            <p className="text-slate-400">Three simple steps to supercharge your practice</p>
+            <p className="text-slate-400">Three simple steps to supercharge your technical interview practice</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -185,9 +372,9 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.15 }}
-                className="text-center"
+                className="text-center p-6 rounded-2xl bg-surface-card border border-surface-border relative group hover:border-brand-500/40 transition-colors"
               >
-                <div className="w-14 h-14 bg-gradient-brand rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-brand">
+                <div className="w-14 h-14 bg-gradient-brand rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-brand group-hover:scale-110 transition-transform">
                   <span className="text-white font-display font-bold text-lg">{step}</span>
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
@@ -198,36 +385,116 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── Student Reviews & Testimonials ───────────────────────── */}
+      <div id="reviews-section">
+        <StudentReviews />
+      </div>
+
+      {/* ── Frequently Asked Questions ───────────────────────────── */}
+      <section id="faq-section" className="py-20 px-6">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-14">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-semibold uppercase tracking-wider mb-4">
+              <HelpCircle className="w-3.5 h-3.5" />
+              Got Questions?
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-4">
+              Frequently Asked <span className="gradient-text">Questions</span>
+            </h2>
+            <p className="text-slate-400 text-sm sm:text-base">
+              Everything you need to know about preparing with InterviewAI.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            {FAQS.map((faq, idx) => {
+              const isOpen = openFaq === idx;
+              return (
+                <div
+                  key={idx}
+                  className="rounded-2xl bg-surface-card border border-surface-border overflow-hidden transition-colors"
+                >
+                  <button
+                    onClick={() => setOpenFaq(isOpen ? null : idx)}
+                    className="w-full py-4 px-6 flex items-center justify-between text-left font-semibold text-white text-base hover:text-brand-300 transition-colors"
+                  >
+                    <span>{faq.q}</span>
+                    <ChevronDown
+                      className={`w-5 h-5 text-slate-400 transition-transform duration-200 flex-shrink-0 ml-4 ${
+                        isOpen ? 'rotate-180 text-brand-400' : ''
+                      }`}
+                    />
+                  </button>
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <div className="px-6 pb-5 pt-1 text-slate-300 text-sm leading-relaxed border-t border-surface-border/50">
+                          {faq.a}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* ── CTA ──────────────────────────────────────────────────── */}
-      <section className="py-24 px-6 text-center">
+      <section className="py-24 px-6 text-center relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-brand-500/15 rounded-full blur-3xl pointer-events-none" />
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="max-w-2xl mx-auto"
+          className="max-w-2xl mx-auto relative z-10"
         >
-          <h2 className="text-4xl font-display font-bold text-white mb-4">
+          <div className="w-16 h-16 bg-gradient-brand rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-brand">
+            <BrainCircuit className="w-8 h-8 text-white" />
+          </div>
+          <h2 className="text-4xl sm:text-5xl font-display font-bold text-white mb-4">
             Ready to nail your next interview?
           </h2>
-          <p className="text-slate-400 mb-8">
-            Join thousands of candidates using AI to prepare smarter, not harder.
+          <p className="text-slate-400 text-base sm:text-lg mb-8">
+            Join 50,000+ candidates who transformed their interview performance and landed top software engineering offers.
           </p>
-          <Link to="/register" className="btn-primary text-base px-10 py-4 inline-flex">
+          <Link to="/register" className="btn-primary text-base px-10 py-4 inline-flex shadow-xl shadow-brand-500/30">
             Get Started — It&apos;s Free <ArrowRight className="w-5 h-5" />
           </Link>
         </motion.div>
       </section>
 
       {/* ── Footer ───────────────────────────────────────────────── */}
-      <footer className="border-t border-surface-border py-8 px-6">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <BrainCircuit className="w-5 h-5 text-brand-400" />
-            <span className="font-display font-semibold text-white">InterviewAI</span>
+      <footer className="border-t border-surface-border py-12 px-6 bg-surface-card/20">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+            <div className="flex items-center gap-2.5">
+              <div className="p-1.5 bg-gradient-brand rounded-lg shadow-brand">
+                <BrainCircuit className="w-5 h-5 text-white" />
+              </div>
+              <span className="font-display font-bold text-lg text-white">InterviewAI</span>
+            </div>
+            <div className="flex items-center gap-6 text-sm text-slate-400">
+              <a href="#skills-section" className="hover:text-white transition-colors">Skills</a>
+              <a href="#features-section" className="hover:text-white transition-colors">Features</a>
+              <a href="#reviews-section" className="hover:text-white transition-colors">Reviews</a>
+              <a href="#faq-section" className="hover:text-white transition-colors">FAQ</a>
+              <Link to="/jobs" className="hover:text-white transition-colors">Jobs</Link>
+            </div>
           </div>
-          <p className="text-slate-500 text-sm">© 2026 InterviewAI. Built with MERN + Groq AI.</p>
+          <div className="border-t border-surface-border/60 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+            <p>© 2026 InterviewAI. All rights reserved. Powered by Llama-3 & Groq.</p>
+            <p>Built for engineers, students, and career switchers worldwide.</p>
+          </div>
         </div>
       </footer>
     </div>
   );
 }
+

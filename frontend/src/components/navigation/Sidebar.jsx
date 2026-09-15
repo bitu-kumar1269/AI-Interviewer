@@ -45,7 +45,7 @@ export default function Sidebar({ isOpen, onClose }) {
     <>
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex flex-col w-64 border-r border-surface-border flex-shrink-0 select-none z-20 transition-colors duration-200"
-        style={{ background: 'rgba(8,14,30,0.95)', backdropFilter: 'blur(20px)' }}
+        style={{ background: 'var(--card-bg)', backdropFilter: 'blur(20px)' }}
       >
         <SidebarContent user={user} onLogout={handleLogout} />
       </aside>
@@ -59,12 +59,12 @@ export default function Sidebar({ isOpen, onClose }) {
             exit={{ x: -300 }}
             transition={{ type: 'spring', damping: 26, stiffness: 220 }}
             className="fixed left-0 top-0 z-40 h-full w-72 border-r border-surface-border flex flex-col lg:hidden shadow-2xl transition-colors duration-200"
-            style={{ background: 'rgba(8,14,30,0.98)', backdropFilter: 'blur(20px)' }}
+            style={{ background: 'var(--card-bg)', backdropFilter: 'blur(20px)' }}
           >
             <button
               onClick={onClose}
               aria-label="Close navigation"
-              className="absolute top-4 right-4 p-1.5 rounded-xl text-slate-500 hover:text-slate-200 hover:bg-white/5 transition-colors"
+              className="absolute top-4 right-4 p-1.5 rounded-xl text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-900/5 dark:hover:bg-white/5 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -132,11 +132,11 @@ function SidebarContent({ user, onLogout, onNavClick }) {
                 'group relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200',
                 isPrimary
                   ? isActive
-                    ? 'text-white'
-                    : 'text-teal-300 border border-teal-500/25 hover:border-teal-400/40 hover:text-white'
+                    ? 'text-white keep-white'
+                    : 'text-teal-700 dark:text-teal-300 border border-teal-500/25 hover:border-teal-400/40 hover:text-slate-900 dark:hover:text-white'
                   : isActive
                   ? 'nav-active-chip'
-                  : 'text-slate-500 hover:text-slate-200 hover:bg-white/4'
+                  : 'text-slate-600 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-900/5 dark:hover:bg-white/4'
               )
             }
             style={({ isActive }) => isPrimary ? {
@@ -151,10 +151,10 @@ function SidebarContent({ user, onLogout, onNavClick }) {
                 <div className={clsx(
                   'p-1.5 rounded-lg transition-colors flex-shrink-0',
                   isPrimary
-                    ? 'bg-white/10 text-white'
+                    ? 'bg-white/10 text-white keep-white'
                     : isActive
                     ? 'text-teal-400 bg-teal-500/15'
-                    : 'text-slate-500 group-hover:text-slate-300 group-hover:bg-white/5'
+                    : 'text-slate-500 dark:text-slate-500 group-hover:text-slate-700 dark:group-hover:text-slate-300 group-hover:bg-slate-900/5 dark:group-hover:bg-white/5'
                 )}>
                   <Icon className="w-4 h-4" />
                 </div>
@@ -187,7 +187,7 @@ function SidebarContent({ user, onLogout, onNavClick }) {
       {/* ── User Dock ─────────────────────────────────────────── */}
       <div className="p-3 border-t border-surface-border">
         <div className="p-2.5 rounded-xl border border-surface-border flex items-center justify-between gap-2"
-          style={{ background: 'rgba(6,11,24,0.6)' }}
+          style={{ background: 'var(--card-bg)' }}
         >
           <div className="flex items-center gap-2.5 min-w-0">
             <div className="relative flex-shrink-0">
@@ -207,7 +207,7 @@ function SidebarContent({ user, onLogout, onNavClick }) {
               </div>
               {/* online dot */}
               <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2"
-                style={{ background: '#10b981', borderColor: '#060b18' }}
+                style={{ background: '#10b981', borderColor: 'var(--card-bg)' }}
               />
             </div>
 

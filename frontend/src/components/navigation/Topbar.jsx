@@ -20,13 +20,13 @@ export default function Topbar({ onMenuClick }) {
 
   return (
     <header className="h-14 border-b border-surface-border flex items-center justify-between px-5 flex-shrink-0 transition-colors duration-200"
-      style={{ background: 'rgba(6,11,24,0.85)', backdropFilter: 'blur(16px)' }}
+      style={{ background: 'var(--card-bg)', backdropFilter: 'blur(16px)' }}
     >
       {/* Left: menu + title */}
       <div className="flex items-center gap-3">
         <button
           onClick={onMenuClick}
-          className="p-1.5 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-white/5 lg:hidden transition-colors"
+          className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-900/5 dark:hover:bg-white/5 lg:hidden transition-colors"
         >
           <Menu className="w-5 h-5" />
         </button>
@@ -43,7 +43,7 @@ export default function Topbar({ onMenuClick }) {
 
         {/* Notifications */}
         <button
-          className="p-1.5 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-white/5 transition-colors relative"
+          className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-900/5 dark:hover:bg-white/5 transition-colors relative"
           aria-label="Notifications"
         >
           <Bell className="w-4 h-4" />
@@ -78,7 +78,7 @@ export default function Topbar({ onMenuClick }) {
               )}
             </div>
           </div>
-          <span className="text-xs text-slate-400 font-medium hidden sm:block">
+          <span className="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">
             {user?.name?.split(' ')[0]}
           </span>
         </Link>

@@ -255,7 +255,7 @@ export default function AiVoiceAssistantHUD({ onVoiceStateChange }) {
   return (
     <div className="w-full flex flex-col gap-4 text-left">
       {/* ── Top Status Bar ───────────────────────────────────────── */}
-      <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-surface-card/80 backdrop-blur-md border border-surface-border">
+      <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-slate-100/90 dark:bg-surface-card/80 backdrop-blur-md border border-slate-200 dark:border-surface-border">
         <div className="flex items-center gap-2.5">
           <div className="relative flex items-center justify-center">
             <span className={`w-3 h-3 rounded-full ${isSpeaking ? 'bg-cyan-400' : isListening ? 'bg-emerald-400 animate-pulse' : 'bg-brand-500'}`} />
@@ -265,10 +265,10 @@ export default function AiVoiceAssistantHUD({ onVoiceStateChange }) {
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-xs font-bold uppercase tracking-wider text-white">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-white">
                 {isSpeaking ? 'AI Speaking...' : isListening ? 'Listening to You...' : 'AI Interviewer Online'}
               </span>
-              <span className="text-[10px] px-1.5 py-0.5 rounded bg-brand-500/20 text-brand-300 font-mono">
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-brand-500/15 text-brand-600 dark:text-brand-300 font-mono font-medium">
                 Llama-3 Neural
               </span>
             </div>
@@ -278,12 +278,12 @@ export default function AiVoiceAssistantHUD({ onVoiceStateChange }) {
         {/* Audio Equalizer Bars & Voice Mute Toggle */}
         <div className="flex items-center gap-3">
           {/* Waveform Equalizer */}
-          <div className="flex items-center gap-1 h-5 px-2 py-1 rounded bg-black/40 border border-white/5">
+          <div className="flex items-center gap-1 h-5 px-2 py-1 rounded bg-slate-200/80 dark:bg-black/40 border border-slate-300/60 dark:border-white/5">
             {[0.4, 0.8, 0.6, 1.0, 0.7, 0.9, 0.5, 0.8].map((baseHeight, i) => (
               <span
                 key={i}
                 className={`w-0.5 rounded-full transition-all duration-150 ${
-                  isSpeaking ? 'bg-cyan-400' : isListening ? 'bg-emerald-400' : 'bg-slate-600'
+                  isSpeaking ? 'bg-cyan-500 dark:bg-cyan-400' : isListening ? 'bg-emerald-500 dark:bg-emerald-400' : 'bg-slate-400 dark:bg-slate-600'
                 }`}
                 style={{
                   height: isSpeaking || isListening
@@ -299,47 +299,47 @@ export default function AiVoiceAssistantHUD({ onVoiceStateChange }) {
               setMuted(!muted);
               if (!muted && isSpeaking) stopSpeaking();
             }}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-surface-hover transition-colors"
+            className="p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-surface-hover transition-colors"
             title={muted ? 'Unmute AI Voice' : 'Mute AI Voice'}
           >
-            {muted ? <VolumeX className="w-4 h-4 text-rose-400" /> : <Volume2 className="w-4 h-4 text-brand-400" />}
+            {muted ? <VolumeX className="w-4 h-4 text-rose-500" /> : <Volume2 className="w-4 h-4 text-brand-500 dark:text-brand-400" />}
           </button>
         </div>
       </div>
 
       {/* ── Question Card ────────────────────────────────────────── */}
-      <div className="p-5 rounded-2xl bg-gradient-to-br from-surface-card/95 via-surface-card to-surface-cardMuted/90 backdrop-blur-xl border border-surface-border shadow-2xl relative overflow-hidden">
+      <div className="p-5 rounded-2xl bg-white dark:bg-gradient-to-br dark:from-surface-card/95 dark:via-surface-card dark:to-surface-cardMuted/90 backdrop-blur-xl border border-slate-200 dark:border-surface-border shadow-md dark:shadow-2xl relative overflow-hidden">
         {/* Glow ambient background */}
         <div className="absolute top-0 right-0 w-48 h-48 bg-brand-500/10 rounded-full blur-3xl pointer-events-none" />
 
         {/* Category & Difficulty Badges */}
         <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
           <div className="flex items-center gap-2">
-            <span className="text-[11px] font-semibold text-brand-400 uppercase tracking-wider flex items-center gap-1">
-              <Bot className="w-3.5 h-3.5 text-brand-400" /> {currentQ.role}
+            <span className="text-[11px] font-semibold text-brand-600 dark:text-brand-400 uppercase tracking-wider flex items-center gap-1">
+              <Bot className="w-3.5 h-3.5 text-brand-500 dark:text-brand-400" /> {currentQ.role}
             </span>
-            <span className="text-slate-600 text-xs">•</span>
-            <span className="text-xs text-slate-300 font-medium">{currentQ.category}</span>
+            <span className="text-slate-400 dark:text-slate-600 text-xs">•</span>
+            <span className="text-xs text-slate-600 dark:text-slate-300 font-medium">{currentQ.category}</span>
           </div>
-          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-accent-500/15 text-accent-300 border border-accent-500/25">
+          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-accent-500/15 text-accent-700 dark:text-accent-300 border border-accent-500/25">
             {currentQ.difficulty}
           </span>
         </div>
 
         {/* The Question Text */}
-        <p className="text-base sm:text-lg font-display font-medium text-white leading-relaxed mb-5">
+        <p className="text-base sm:text-lg font-display font-semibold text-slate-900 dark:text-white leading-relaxed mb-5">
           &ldquo;{currentQ.question}&rdquo;
         </p>
 
         {/* Question Audio Action Controls */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-surface-border/60">
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-200 dark:border-surface-border/60">
           <div className="flex items-center gap-2">
             <button
               onClick={handleReplayQuestion}
               className={`text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 font-medium transition-all ${
                 isSpeaking
-                  ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30 animate-pulse'
-                  : 'bg-brand-500/15 text-brand-300 hover:bg-brand-500/25 border border-brand-500/30'
+                  ? 'bg-rose-500/20 text-rose-600 dark:text-rose-300 border border-rose-500/30 animate-pulse'
+                  : 'bg-brand-500/15 text-brand-600 dark:text-brand-300 hover:bg-brand-500/25 border border-brand-500/30'
               }`}
             >
               {isSpeaking ? (
@@ -355,7 +355,7 @@ export default function AiVoiceAssistantHUD({ onVoiceStateChange }) {
 
             <button
               onClick={handleNextQuestion}
-              className="text-xs px-3 py-1.5 rounded-lg bg-surface-hover text-slate-300 hover:text-white flex items-center gap-1 transition-colors border border-surface-border"
+              className="text-xs px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-surface-hover text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white flex items-center gap-1 transition-colors border border-slate-200 dark:border-surface-border"
             >
               Next Question <ChevronRight className="w-3.5 h-3.5" />
             </button>
@@ -368,16 +368,16 @@ export default function AiVoiceAssistantHUD({ onVoiceStateChange }) {
       </div>
 
       {/* ── Candidate Interaction Controls ─────────────────────────── */}
-      <div className="p-4 rounded-xl bg-surface-card/90 backdrop-blur-md border border-surface-border space-y-3">
+      <div className="p-4 rounded-xl bg-slate-50 dark:bg-surface-card/90 backdrop-blur-md border border-slate-200 dark:border-surface-border space-y-3">
         <div className="flex items-center justify-between gap-2">
-          <span className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-            <MessageSquare className="w-3.5 h-3.5 text-brand-400" />
+          <span className="text-xs font-semibold text-slate-800 dark:text-slate-300 flex items-center gap-1.5">
+            <MessageSquare className="w-3.5 h-3.5 text-brand-500 dark:text-brand-400" />
             Your Answer
           </span>
           <div className="flex items-center gap-2">
             <button
               onClick={handleUseSampleAnswer}
-              className="text-[11px] text-brand-400 hover:text-brand-300 hover:underline flex items-center gap-1"
+              className="text-[11px] font-medium text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300 hover:underline flex items-center gap-1"
               title="Click to fill with sample structured answer"
             >
               <Zap className="w-3 h-3" /> Quick Sample Answer
@@ -386,16 +386,16 @@ export default function AiVoiceAssistantHUD({ onVoiceStateChange }) {
         </div>
 
         {/* Live Transcript / Input Area */}
-        <div className="relative min-h-[56px] p-3 rounded-lg bg-black/40 border border-surface-border text-xs leading-relaxed text-slate-300 font-normal">
+        <div className="relative min-h-[56px] p-3 rounded-lg bg-slate-100/90 dark:bg-black/40 border border-slate-200 dark:border-surface-border text-xs leading-relaxed text-slate-800 dark:text-slate-200 font-normal">
           {isListening ? (
-            <p className="text-emerald-400 flex items-center gap-2 animate-pulse font-medium">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+            <p className="text-emerald-600 dark:text-emerald-400 flex items-center gap-2 animate-pulse font-medium">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
               Listening... speak your response now
             </p>
           ) : transcript ? (
-            <p className="text-slate-200">{transcript}</p>
+            <p className="text-slate-900 dark:text-slate-200 font-medium">{transcript}</p>
           ) : (
-            <p className="text-slate-500 italic">
+            <p className="text-slate-600 dark:text-slate-400 italic">
               Click &quot;Speak Your Answer&quot; to test your microphone, or choose &quot;Quick Sample Answer&quot; to simulate instant AI evaluation.
             </p>
           )}
@@ -408,7 +408,7 @@ export default function AiVoiceAssistantHUD({ onVoiceStateChange }) {
             className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all shadow-md ${
               isListening
                 ? 'bg-rose-600 text-white animate-pulse ring-2 ring-rose-400'
-                : 'bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600/30 border border-emerald-500/30'
+                : 'bg-emerald-600/15 dark:bg-emerald-600/20 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-600/25 border border-emerald-500/30'
             }`}
           >
             {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
@@ -440,45 +440,45 @@ export default function AiVoiceAssistantHUD({ onVoiceStateChange }) {
             initial={{ opacity: 0, y: 10, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10 }}
-            className="p-4 rounded-xl bg-gradient-to-r from-brand-950/40 via-surface-card to-surface-card border border-brand-500/30 shadow-lg"
+            className="p-4 rounded-xl bg-slate-50 dark:bg-gradient-to-r dark:from-brand-950/40 dark:via-surface-card dark:to-surface-card border border-emerald-500/30 shadow-lg"
           >
             <div className="flex items-center justify-between mb-2.5">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                <h4 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-1">
                   AI Assessment Feedback
                 </h4>
               </div>
               <div className="flex items-center gap-2 font-mono text-xs">
-                <span className="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-bold border border-emerald-500/25">
+                <span className="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 font-bold border border-emerald-500/25">
                   Score: {evaluation.score}/100
                 </span>
-                <span className="px-2 py-0.5 rounded bg-accent-500/15 text-accent-300 border border-accent-500/25">
+                <span className="px-2 py-0.5 rounded bg-accent-500/15 text-accent-700 dark:text-accent-300 border border-accent-500/25">
                   ATS: {evaluation.atsMatch}
                 </span>
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-2">
-              <div className="p-2 rounded bg-black/30 border border-white/5">
-                <span className="text-slate-400 block text-[10px]">Confidence Level</span>
-                <span className="font-semibold text-slate-200">{evaluation.confidence}</span>
+              <div className="p-2 rounded bg-slate-100 dark:bg-black/30 border border-slate-200 dark:border-white/5">
+                <span className="text-slate-500 dark:text-slate-400 block text-[10px]">Confidence Level</span>
+                <span className="font-semibold text-slate-800 dark:text-slate-200">{evaluation.confidence}</span>
               </div>
-              <div className="p-2 rounded bg-black/30 border border-white/5">
-                <span className="text-slate-400 block text-[10px]">Communication Style</span>
-                <span className="font-semibold text-slate-200">{evaluation.delivery}</span>
+              <div className="p-2 rounded bg-slate-100 dark:bg-black/30 border border-slate-200 dark:border-white/5">
+                <span className="text-slate-500 dark:text-slate-400 block text-[10px]">Communication Style</span>
+                <span className="font-semibold text-slate-800 dark:text-slate-200">{evaluation.delivery}</span>
               </div>
             </div>
 
             <div className="space-y-1">
-              <span className="text-[11px] font-semibold text-slate-400">Key Strengths Detected:</span>
+              <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-400">Key Strengths Detected:</span>
               <div className="flex flex-wrap gap-1.5">
                 {evaluation.keyPoints.map((point, idx) => (
                   <span
                     key={idx}
-                    className="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20"
+                    className="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-500/20"
                   >
-                    <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                    <CheckCircle2 className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                     {point}
                   </span>
                 ))}

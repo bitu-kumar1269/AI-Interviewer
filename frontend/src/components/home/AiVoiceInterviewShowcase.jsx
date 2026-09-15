@@ -21,31 +21,31 @@ export default function AiVoiceInterviewShowcase() {
       <div className="absolute -inset-1 bg-gradient-to-r from-brand-500/20 via-accent-600/15 to-brand-500/20 rounded-3xl blur-2xl opacity-60 pointer-events-none" />
 
       {/* Main Container Card */}
-      <div className="relative rounded-3xl bg-surface-card/90 border border-surface-border backdrop-blur-2xl shadow-2xl overflow-hidden p-6 sm:p-8">
+      <div className="relative rounded-3xl bg-white/95 dark:bg-surface-card/90 border border-slate-200 dark:border-surface-border backdrop-blur-2xl shadow-xl dark:shadow-2xl overflow-hidden p-6 sm:p-8">
         {/* Decorative Grid Lines Header */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pb-6 border-b border-surface-border">
+        <div className="flex flex-wrap items-center justify-between gap-3 pb-6 border-b border-slate-200 dark:border-surface-border">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-xl bg-gradient-brand shadow-brand flex items-center justify-center">
               <Cpu className="w-5 h-5 text-white" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-base sm:text-lg font-display font-bold text-white tracking-wide">
+                <h3 className="text-base sm:text-lg font-display font-bold text-slate-900 dark:text-white tracking-wide">
                   Interactive AI Voice Interview Simulation
                 </h3>
-                <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-brand-500/15 text-brand-300 border border-brand-500/30">
-                  <Activity className="w-3 h-3 text-brand-400" /> Real-Time 3D
+                <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-brand-500/15 text-brand-600 dark:text-brand-300 border border-brand-500/30">
+                  <Activity className="w-3 h-3 text-brand-500 dark:text-brand-400" /> Real-Time 3D
                 </span>
               </div>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 Experience dynamic interview generation with live speech synthesis, mic capture, and ATS scoring.
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-2 text-xs font-mono">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-black/40 border border-white/5 text-slate-300">
-              <Radio className={`w-3.5 h-3.5 ${voiceState.isSpeaking ? 'text-brand-400 animate-pulse' : voiceState.isListening ? 'text-emerald-400 animate-pulse' : 'text-slate-500'}`} />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-100 dark:bg-black/40 border border-slate-200 dark:border-white/5 text-slate-700 dark:text-slate-300">
+              <Radio className={`w-3.5 h-3.5 ${voiceState.isSpeaking ? 'text-brand-500 dark:text-brand-400 animate-pulse' : voiceState.isListening ? 'text-emerald-500 dark:text-emerald-400 animate-pulse' : 'text-slate-400 dark:text-slate-500'}`} />
               {voiceState.isSpeaking ? 'VOICE OUT: 44.1kHz' : voiceState.isListening ? 'MIC IN: ACTIVE' : 'VOICE ENGINE READY'}
             </span>
           </div>
@@ -71,8 +71,8 @@ export default function AiVoiceInterviewShowcase() {
             </div>
 
             {/* Floating Info Pill under 3D model */}
-            <div className="relative z-10 mt-2 flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-cardMuted/80 backdrop-blur-md border border-surface-border text-[11px] text-slate-400 shadow-sm">
-              <Sparkles className="w-3.5 h-3.5 text-brand-400" />
+            <div className="relative z-10 mt-2 flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100/90 dark:bg-surface-cardMuted/80 backdrop-blur-md border border-slate-200 dark:border-surface-border text-[11px] text-slate-600 dark:text-slate-400 shadow-sm">
+              <Sparkles className="w-3.5 h-3.5 text-brand-500 dark:text-brand-400" />
               <span>3D Neural Model: Move cursor to inspect core</span>
             </div>
           </div>

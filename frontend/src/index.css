@@ -418,4 +418,8 @@ html.light {
   .border-white\/\[0\.06\], .border-white\/\[0\.07\], .border-white\/10 {
     border-color: #e2e8f0 !important;
   }
+
+  .nav-active-chip {
+    color: #0f766e !important;
+  }
 }

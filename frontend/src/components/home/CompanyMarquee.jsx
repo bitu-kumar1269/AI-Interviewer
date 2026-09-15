@@ -146,7 +146,7 @@ const COMPANIES = [
   {
     name: 'Domo',
     render: () => (
-      <div className="flex items-center px-2 py-0.5 rounded bg-current/10 border border-current/20">
+      <div className="flex items-center px-2 py-0.5 rounded bg-slate-200/60 dark:bg-current/10 border border-slate-300/80 dark:border-current/20">
         <span className="font-sans font-black text-sm tracking-widest uppercase">DOMO</span>
       </div>
     ),
@@ -155,13 +155,13 @@ const COMPANIES = [
 
 export default function CompanyMarquee() {
   return (
-    <section className="relative w-full py-12 overflow-hidden border-y border-surface-border/60 bg-[#060b18]/40">
+    <section className="relative w-full py-10 overflow-hidden">
       {/* Subtle ambient gradient spotlight */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-500/[0.03] to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-500/[0.02] to-transparent pointer-events-none" />
 
       {/* Section Subtitle */}
       <div className="max-w-6xl mx-auto px-6 text-center mb-8 relative z-10">
-        <p className="text-[11px] sm:text-xs font-mono font-bold tracking-[0.22em] text-slate-400 dark:text-slate-500 uppercase">
+        <p className="text-[11px] sm:text-xs font-mono font-bold tracking-[0.22em] text-slate-600 dark:text-slate-400 uppercase">
           TRUSTED BY CANDIDATES HIRED AT 500+ TECH LEADERS & ENTERPRISES
         </p>
       </div>
@@ -175,7 +175,7 @@ export default function CompanyMarquee() {
           {COMPANIES.map((company, idx) => (
             <div
               key={`c1-${company.name}-${idx}`}
-              className="flex items-center text-slate-500 hover:text-white dark:text-slate-400/70 dark:hover:text-white transition-all duration-300 transform hover:scale-105 opacity-85 hover:opacity-100 cursor-default flex-shrink-0"
+              className="flex items-center text-slate-700 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white transition-all duration-300 transform hover:scale-105 opacity-90 hover:opacity-100 cursor-default flex-shrink-0"
               title={company.name}
             >
               {company.render()}
@@ -191,7 +191,7 @@ export default function CompanyMarquee() {
           {COMPANIES.map((company, idx) => (
             <div
               key={`c2-${company.name}-${idx}`}
-              className="flex items-center text-slate-500 hover:text-white dark:text-slate-400/70 dark:hover:text-white transition-all duration-300 transform hover:scale-105 opacity-85 hover:opacity-100 cursor-default flex-shrink-0"
+              className="flex items-center text-slate-700 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white transition-all duration-300 transform hover:scale-105 opacity-90 hover:opacity-100 cursor-default flex-shrink-0"
               title={company.name}
             >
               {company.render()}

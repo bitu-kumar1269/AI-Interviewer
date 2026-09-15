@@ -9,7 +9,7 @@ import {
 import { userAPI } from '@/services/api';
 import { useAuthStore } from '@/store/authStore';
 import {
-  RadialBarChart, RadialBar, ResponsiveContainer,
+  RadialBarChart, RadialBar, ResponsiveContainer, PolarAngleAxis,
   AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid
 } from 'recharts';
 
@@ -140,18 +140,24 @@ export default function DashboardPage() {
         <motion.div {...fadeUp(0.2)} className="card p-6 flex flex-col items-center justify-center relative overflow-hidden">
           {/* bg teal orb */}
           <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-teal-500/5 blur-2xl pointer-events-none" />
-          <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-4">
+          <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-3">
             Avg. Performance
           </h3>
-          <div className="relative">
-            <ResponsiveContainer width={160} height={160}>
+          <div className="relative flex items-center justify-center">
+            <ResponsiveContainer width={180} height={180}>
               <RadialBarChart
-                innerRadius="65%"
+                innerRadius="76%"
                 outerRadius="92%"
                 data={scoreData}
                 startAngle={90}
                 endAngle={-270}
               >
+                <PolarAngleAxis
+                  type="number"
+                  domain={[0, 100]}
+                  angleAxisId={0}
+                  tick={false}
+                />
                 <RadialBar
                   background={{ fill: 'var(--progress-track)' }}
                   dataKey="value"
@@ -160,13 +166,16 @@ export default function DashboardPage() {
               </RadialBarChart>
             </ResponsiveContainer>
             {/* center text */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <p className="text-3xl font-display font-bold gradient-text leading-none">
+            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none">
+              <span className="text-2xl font-display font-bold gradient-text leading-none tracking-tight">
                 {stats?.averageScore ?? 0}%
-              </p>
+              </span>
+              <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wider mt-1">
+                Score
+              </span>
             </div>
           </div>
-          <p className="text-slate-600 text-xs mt-2 tracking-wide">Overall score</p>
+          <p className="text-slate-500 text-xs mt-2 tracking-wide">Overall score</p>
         </motion.div>
 
         {/* Recent Sessions */}
