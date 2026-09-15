@@ -14,7 +14,8 @@ import {
   Briefcase,
   Sparkles,
   ChevronRight,
-  ShieldCheck
+  ShieldCheck,
+  Zap,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import toast from 'react-hot-toast';
@@ -43,7 +44,9 @@ export default function Sidebar({ isOpen, onClose }) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden lg:flex flex-col w-64 bg-surface-card/95 backdrop-blur-xl border-r border-surface-border flex-shrink-0 select-none z-20 transition-colors duration-200">
+      <aside className="hidden lg:flex flex-col w-64 border-r border-surface-border flex-shrink-0 select-none z-20 transition-colors duration-200"
+        style={{ background: 'rgba(8,14,30,0.95)', backdropFilter: 'blur(20px)' }}
+      >
         <SidebarContent user={user} onLogout={handleLogout} />
       </aside>
 
@@ -55,12 +58,13 @@ export default function Sidebar({ isOpen, onClose }) {
             animate={{ x: 0 }}
             exit={{ x: -300 }}
             transition={{ type: 'spring', damping: 26, stiffness: 220 }}
-            className="fixed left-0 top-0 z-40 h-full w-72 bg-surface-card border-r border-surface-border flex flex-col lg:hidden shadow-2xl transition-colors duration-200"
+            className="fixed left-0 top-0 z-40 h-full w-72 border-r border-surface-border flex flex-col lg:hidden shadow-2xl transition-colors duration-200"
+            style={{ background: 'rgba(8,14,30,0.98)', backdropFilter: 'blur(20px)' }}
           >
             <button
               onClick={onClose}
               aria-label="Close navigation"
-              className="absolute top-4 right-4 p-1.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-surface-hover transition-colors"
+              className="absolute top-4 right-4 p-1.5 rounded-xl text-slate-500 hover:text-slate-200 hover:bg-white/5 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -75,29 +79,45 @@ export default function Sidebar({ isOpen, onClose }) {
 function SidebarContent({ user, onLogout, onNavClick }) {
   return (
     <div className="flex flex-col h-full">
-      {/* Brand Header */}
-      <div className="px-5 py-5 border-b border-surface-border flex items-center justify-between">
+
+      {/* ── Brand Header ─────────────────────────────────────── */}
+      <div className="px-5 py-5 border-b border-surface-border">
         <div className="flex items-center gap-3">
-          <div className="relative p-2 rounded-xl bg-gradient-to-br from-brand-500 via-violet-600 to-cyan-500 shadow-glow flex items-center justify-center">
+          {/* Logo mark */}
+          <div className="relative w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+            style={{ background: 'linear-gradient(135deg, #0d9488, #14b8a6, #2563eb)', boxShadow: '0 0 20px rgba(13,148,136,0.4)' }}
+          >
             <BrainCircuit className="w-5 h-5 text-white" />
-            <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-cyan-400 animate-ping opacity-75" />
+            {/* live indicator */}
+            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2"
+              style={{ background: '#10b981', borderColor: '#080e1c' }}
+            >
+              <span className="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-70" />
+            </span>
           </div>
+
           <div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-display font-bold text-base tracking-tight text-slate-900 dark:text-white">Interview</span>
-              <span className="font-display font-bold text-base tracking-tight bg-gradient-to-r from-violet-600 to-cyan-600 dark:from-violet-400 dark:to-cyan-400 bg-clip-text text-transparent">AI</span>
+            <div className="flex items-center gap-1">
+              <span className="font-display font-bold text-base text-white tracking-tight">
+                Interview
+              </span>
+              <span className="font-display font-bold text-base tracking-tight gradient-text">
+                AI
+              </span>
             </div>
-            <p className="text-[10px] font-mono text-cyan-600 dark:text-cyan-400/80 tracking-widest uppercase flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 inline-block" />
-              COCKPIT v2.0
+            <p className="text-[10px] font-mono uppercase tracking-widest flex items-center gap-1"
+              style={{ color: '#14b8a6' }}
+            >
+              <Zap className="w-2.5 h-2.5" />
+              Cockpit v2.0
             </p>
           </div>
         </div>
       </div>
 
-      {/* Navigation Links */}
-      <nav className="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto">
-        <p className="px-3 text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
+      {/* ── Navigation ───────────────────────────────────────── */}
+      <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
+        <p className="px-3 text-[10px] font-semibold text-slate-600 uppercase tracking-widest mb-3">
           Navigation
         </p>
 
@@ -109,29 +129,33 @@ function SidebarContent({ user, onLogout, onNavClick }) {
             end={to === '/dashboard'}
             className={({ isActive }) =>
               clsx(
-                'group relative flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200',
+                'group relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200',
                 isPrimary
                   ? isActive
-                    ? 'bg-gradient-to-r from-brand-600 to-violet-600 text-white shadow-glow border border-brand-400/40'
-                    : 'bg-gradient-to-r from-brand-600/20 to-violet-600/20 text-brand-600 dark:text-brand-200 hover:text-brand-700 dark:hover:text-white border border-brand-500/30 hover:border-brand-400/60 shadow-[0_0_15px_rgba(99,102,241,0.15)]'
+                    ? 'text-white'
+                    : 'text-teal-300 border border-teal-500/25 hover:border-teal-400/40 hover:text-white'
                   : isActive
-                  ? 'bg-gradient-to-r from-brand-600/15 via-violet-600/10 to-transparent text-brand-600 dark:text-white border-l-2 border-l-brand-500 dark:border-l-brand-400 border-y border-r border-transparent font-semibold'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-surface-hover'
+                  ? 'nav-active-chip'
+                  : 'text-slate-500 hover:text-slate-200 hover:bg-white/4'
               )
             }
+            style={({ isActive }) => isPrimary ? {
+              background: isActive
+                ? 'linear-gradient(135deg, #0d9488, #14b8a6 60%, #2563eb)'
+                : 'rgba(13,148,136,0.08)',
+              boxShadow: isActive ? '0 0 20px rgba(13,148,136,0.3)' : 'none',
+            } : {}}
           >
             {({ isActive }) => (
               <>
-                <div
-                  className={clsx(
-                    'p-1.5 rounded-lg transition-colors',
-                    isPrimary
-                      ? 'bg-white/10 text-white'
-                      : isActive
-                      ? 'text-brand-500 dark:text-brand-400 bg-brand-500/15'
-                      : 'text-slate-500 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-slate-200 group-hover:bg-surface-hover'
-                  )}
-                >
+                <div className={clsx(
+                  'p-1.5 rounded-lg transition-colors flex-shrink-0',
+                  isPrimary
+                    ? 'bg-white/10 text-white'
+                    : isActive
+                    ? 'text-teal-400 bg-teal-500/15'
+                    : 'text-slate-500 group-hover:text-slate-300 group-hover:bg-white/5'
+                )}>
                   <Icon className="w-4 h-4" />
                 </div>
 
@@ -140,17 +164,19 @@ function SidebarContent({ user, onLogout, onNavClick }) {
                 </span>
 
                 {badge && (
-                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-cyan-500/15 text-cyan-600 dark:text-cyan-300 border border-cyan-500/25 uppercase tracking-wider">
+                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider"
+                    style={{ background: 'rgba(59,130,246,0.12)', color: '#60a5fa', border: '1px solid rgba(59,130,246,0.2)' }}
+                  >
                     {badge}
                   </span>
                 )}
 
                 {isPrimary && !badge && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse flex-shrink-0" />
                 )}
 
                 {isActive && !isPrimary && !badge && (
-                  <ChevronRight className="w-3.5 h-3.5 text-brand-500 dark:text-brand-400/60" />
+                  <ChevronRight className="w-3.5 h-3.5 text-teal-500/70 flex-shrink-0" />
                 )}
               </>
             )}
@@ -158,13 +184,20 @@ function SidebarContent({ user, onLogout, onNavClick }) {
         ))}
       </nav>
 
-      {/* User profile dock */}
-      <div className="p-3 border-t border-surface-border bg-surface-cardMuted/60">
-        <div className="p-2.5 rounded-xl bg-surface-card border border-surface-border flex items-center justify-between gap-2 shadow-sm">
+      {/* ── User Dock ─────────────────────────────────────────── */}
+      <div className="p-3 border-t border-surface-border">
+        <div className="p-2.5 rounded-xl border border-surface-border flex items-center justify-between gap-2"
+          style={{ background: 'rgba(6,11,24,0.6)' }}
+        >
           <div className="flex items-center gap-2.5 min-w-0">
             <div className="relative flex-shrink-0">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 via-violet-600 to-cyan-500 p-[1px]">
-                <div className="w-full h-full rounded-[11px] bg-surface-card flex items-center justify-center text-slate-900 dark:text-white font-semibold text-xs overflow-hidden">
+              {/* avatar with teal gradient ring */}
+              <div className="w-9 h-9 rounded-xl p-[1.5px]"
+                style={{ background: 'linear-gradient(135deg, #0d9488, #2563eb)' }}
+              >
+                <div className="w-full h-full rounded-[11px] overflow-hidden flex items-center justify-center text-white font-semibold text-xs"
+                  style={{ background: '#0a1124' }}
+                >
                   {user?.avatar ? (
                     <img src={user.avatar} alt={user.name || 'User'} className="w-full h-full object-cover" />
                   ) : (
@@ -172,21 +205,25 @@ function SidebarContent({ user, onLogout, onNavClick }) {
                   )}
                 </div>
               </div>
-              <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-surface-card" />
+              {/* online dot */}
+              <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2"
+                style={{ background: '#10b981', borderColor: '#060b18' }}
+              />
             </div>
+
             <div className="min-w-0">
               <div className="flex items-center gap-1">
-                <p className="text-xs font-semibold text-slate-900 dark:text-white truncate">{user?.name || 'Candidate'}</p>
-                <ShieldCheck className="w-3 h-3 text-cyan-500 dark:text-cyan-400 flex-shrink-0" />
+                <p className="text-xs font-semibold text-slate-200 truncate">{user?.name || 'Candidate'}</p>
+                <ShieldCheck className="w-3 h-3 text-teal-400 flex-shrink-0" />
               </div>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">{user?.email || 'Logged In'}</p>
+              <p className="text-[11px] text-slate-600 truncate">{user?.email || 'Logged In'}</p>
             </div>
           </div>
 
           <button
             onClick={onLogout}
             title="Sign Out"
-            className="p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-rose-500 hover:bg-rose-500/10 transition-colors flex-shrink-0"
+            className="p-1.5 rounded-lg text-slate-600 hover:text-rose-400 hover:bg-rose-500/10 transition-colors flex-shrink-0"
           >
             <LogOut className="w-4 h-4" />
           </button>

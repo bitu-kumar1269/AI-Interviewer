@@ -302,7 +302,7 @@ export default function AiVoiceAssistantHUD({ onVoiceStateChange }) {
             className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-surface-hover transition-colors"
             title={muted ? 'Unmute AI Voice' : 'Mute AI Voice'}
           >
-            {muted ? <VolumeX className="w-4 h-4 text-rose-400" /> : <Volume2 className="w-4 h-4 text-cyan-400" />}
+            {muted ? <VolumeX className="w-4 h-4 text-rose-400" /> : <Volume2 className="w-4 h-4 text-brand-400" />}
           </button>
         </div>
       </div>
@@ -321,7 +321,7 @@ export default function AiVoiceAssistantHUD({ onVoiceStateChange }) {
             <span className="text-slate-600 text-xs">•</span>
             <span className="text-xs text-slate-300 font-medium">{currentQ.category}</span>
           </div>
-          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-violet-500/15 text-violet-300 border border-violet-500/25">
+          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-accent-500/15 text-accent-300 border border-accent-500/25">
             {currentQ.difficulty}
           </span>
         </div>
@@ -339,7 +339,7 @@ export default function AiVoiceAssistantHUD({ onVoiceStateChange }) {
               className={`text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 font-medium transition-all ${
                 isSpeaking
                   ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30 animate-pulse'
-                  : 'bg-cyan-500/15 text-cyan-300 hover:bg-cyan-500/25 border border-cyan-500/30'
+                  : 'bg-brand-500/15 text-brand-300 hover:bg-brand-500/25 border border-brand-500/30'
               }`}
             >
               {isSpeaking ? (
@@ -453,7 +453,7 @@ export default function AiVoiceAssistantHUD({ onVoiceStateChange }) {
                 <span className="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-bold border border-emerald-500/25">
                   Score: {evaluation.score}/100
                 </span>
-                <span className="px-2 py-0.5 rounded bg-cyan-500/15 text-cyan-400 border border-cyan-500/25">
+                <span className="px-2 py-0.5 rounded bg-accent-500/15 text-accent-300 border border-accent-500/25">
                   ATS: {evaluation.atsMatch}
                 </span>
               </div>

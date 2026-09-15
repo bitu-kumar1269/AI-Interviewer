@@ -46,7 +46,7 @@ function RoleBadge({ role }) {
     return <span className="badge bg-teal-600/20 text-teal-300 border border-teal-500/30">Support</span>;
   }
   if (role === 'content_manager') {
-    return <span className="badge bg-indigo-600/20 text-indigo-300 border border-indigo-500/30">Content Manager</span>;
+    return <span className="badge bg-cyan-600/20 text-cyan-300 border border-cyan-500/30">Content Manager</span>;
   }
   return <span className="badge bg-blue-600/20 text-blue-300 border border-blue-500/30">Candidate</span>;
 }
@@ -103,7 +103,7 @@ function UserProfileDrawer({ userId, onClose, onUpdateSuccess }) {
         
         {/* User Card */}
         <div className="flex items-center gap-4 bg-white/[0.02] p-4 border border-white/[0.05] rounded-2xl">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-600 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-600 to-accent-600 flex items-center justify-center text-white font-bold text-lg">
             {initial}
           </div>
           <div className="min-w-0">
@@ -634,7 +634,7 @@ export default function AdminUsersPage() {
                       {/* User Info */}
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-600 to-purple-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-600 to-accent-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
                             {u.name?.[0]?.toUpperCase()}
                           </div>
                           <div className="min-w-0">

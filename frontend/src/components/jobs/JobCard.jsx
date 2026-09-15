@@ -27,16 +27,16 @@ export default function JobCard({ job, onClick, searchQuery = '' }) {
   return (
     <div 
       onClick={onClick}
-      className="group cursor-pointer bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:border-indigo-500/30 transition-all duration-300 flex flex-col h-full relative overflow-hidden focus-within:ring-2 focus-within:ring-indigo-500"
+      className="group cursor-pointer bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:border-brand-500/30 transition-all duration-300 flex flex-col h-full relative overflow-hidden focus-within:ring-2 focus-within:ring-brand-500"
     >
       
       {/* Background Glow on Hover */}
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/50 to-purple-50/50 dark:from-indigo-900/10 dark:to-purple-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-50/50 to-accent-50/50 dark:from-brand-900/10 dark:to-accent-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
       <div className="relative z-10 flex flex-col h-full">
         {/* Header: Title & Company */}
         <div className="mb-4">
-          <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-1">
+          <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors line-clamp-1">
             <HighlightText text={title} query={searchQuery} />
           </h3>
           <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400 font-medium text-sm">
@@ -72,7 +72,7 @@ export default function JobCard({ job, onClick, searchQuery = '' }) {
             href={applicationLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-indigo-50 dark:bg-indigo-500/10 hover:bg-indigo-600 dark:hover:bg-indigo-600 text-indigo-700 dark:text-indigo-300 hover:text-white font-bold rounded-xl transition-all duration-300 outline-none"
+            className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-brand-50 dark:bg-brand-500/10 hover:bg-brand-600 dark:hover:bg-brand-600 text-brand-700 dark:text-brand-300 hover:text-white font-bold rounded-xl transition-all duration-300 outline-none"
           >
             Apply Now
             <ExternalLink className="w-4 h-4" />

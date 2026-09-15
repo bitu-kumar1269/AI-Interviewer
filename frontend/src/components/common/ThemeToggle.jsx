@@ -24,7 +24,7 @@ export default function ThemeToggle({ className = '', showLabel = false }) {
         transition-colors duration-200 select-none
         ${isDark
           ? 'bg-[#141a30]/80 hover:bg-[#1a2240] text-amber-400 border border-amber-400/20 shadow-[0_0_15px_rgba(251,191,36,0.15)]'
-          : 'bg-white hover:bg-slate-100 text-indigo-600 border border-slate-200 shadow-sm'
+          : 'bg-white hover:bg-slate-100 text-brand-600 border border-slate-200 shadow-sm'
         }
         ${className}
       `}
@@ -50,7 +50,7 @@ export default function ThemeToggle({ className = '', showLabel = false }) {
             transition={{ duration: 0.22, ease: 'easeOut' }}
             className="flex items-center justify-center"
           >
-            <Moon className="w-4 h-4 text-indigo-600 drop-shadow-[0_0_8px_rgba(99,102,241,0.3)]" />
+            <Moon className="w-4 h-4 text-brand-600 drop-shadow-[0_0_8px_rgba(20,184,166,0.3)]" />
           </motion.div>
         )}
       </AnimatePresence>

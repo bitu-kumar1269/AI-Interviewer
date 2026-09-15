@@ -50,9 +50,9 @@ export default function SocialLoginButtons() {
   return (
     <div>
       <div className="flex items-center gap-3 my-5">
-        <div className="h-px flex-1 bg-slate-700/60" />
+        <div className="h-px flex-1 bg-slate-300 dark:bg-slate-700/60" />
         <span className="text-[11px] uppercase tracking-wider text-slate-500 font-mono">or continue with</span>
-        <div className="h-px flex-1 bg-slate-700/60" />
+        <div className="h-px flex-1 bg-slate-300 dark:bg-slate-700/60" />
       </div>
 
       <div className="grid grid-cols-3 gap-3">
@@ -60,7 +60,7 @@ export default function SocialLoginButtons() {
           <a
             key={p.id}
             href={p.href}
-            className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#080d1a]/85 border border-slate-700/70 text-slate-200 text-xs font-medium transition-all active:scale-[0.97] hover:border-slate-400/70"
+            className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white dark:bg-[#080d1a]/85 border border-slate-300 dark:border-slate-700/70 text-slate-700 dark:text-slate-200 text-xs font-medium transition-all active:scale-[0.97] hover:border-slate-400 dark:hover:border-slate-400/70 shadow-sm dark:shadow-none"
           >
             {p.icon}
             <span className="hidden sm:inline">{p.label}</span>

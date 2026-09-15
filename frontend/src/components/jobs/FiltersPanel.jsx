@@ -29,7 +29,7 @@ export default function FiltersPanel({ filters, onApply }) {
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm sticky top-6">
       <div className="flex items-center gap-2 mb-6 text-slate-900 dark:text-white">
-        <SlidersHorizontal className="w-5 h-5 text-indigo-500" />
+        <SlidersHorizontal className="w-5 h-5 text-brand-500" />
         <h3 className="font-bold text-lg">Filters</h3>
       </div>
 
@@ -44,7 +44,7 @@ export default function FiltersPanel({ filters, onApply }) {
             <select
               value={draftFilters.experience}
               onChange={(e) => handleChange('experience', e.target.value)}
-              className="w-full p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all appearance-none cursor-pointer"
+              className="w-full p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all appearance-none cursor-pointer"
             >
               <option value="">Any Experience</option>
               <option value="junior">Junior</option>
@@ -68,7 +68,7 @@ export default function FiltersPanel({ filters, onApply }) {
             <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
               Min Salary
             </label>
-            <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">
+            <span className="text-sm font-bold text-brand-600 dark:text-brand-400">
               {draftFilters.salaryMin > 0 ? `$${parseInt(draftFilters.salaryMin).toLocaleString()}+` : 'Any'}
             </span>
           </div>
@@ -79,7 +79,7 @@ export default function FiltersPanel({ filters, onApply }) {
             step="10000"
             value={draftFilters.salaryMin}
             onChange={(e) => handleChange('salaryMin', e.target.value)}
-            className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+            className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-brand-600"
           />
           <div className="flex justify-between text-xs text-slate-400 mt-2 font-medium">
             <span>$0</span>
@@ -102,7 +102,7 @@ export default function FiltersPanel({ filters, onApply }) {
               { value: 'remote', label: 'Remote' },
             ].map((option) => (
               <label key={option.value} className="flex items-center gap-3 cursor-pointer group">
-                <div className="relative flex items-center justify-center w-5 h-5 rounded border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 group-hover:border-indigo-500 transition-colors">
+                <div className="relative flex items-center justify-center w-5 h-5 rounded border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 group-hover:border-brand-500 transition-colors">
                   <input
                     type="radio"
                     name="jobType"
@@ -112,10 +112,10 @@ export default function FiltersPanel({ filters, onApply }) {
                     className="absolute opacity-0 w-full h-full cursor-pointer"
                   />
                   {draftFilters.jobType === option.value && (
-                    <div className="w-2.5 h-2.5 bg-indigo-600 rounded-sm" />
+                    <div className="w-2.5 h-2.5 bg-brand-500 rounded-sm" />
                   )}
                 </div>
-                <span className={`text-sm font-medium transition-colors ${draftFilters.jobType === option.value ? 'text-indigo-600 dark:text-indigo-400 font-bold' : 'text-slate-600 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-slate-200'}`}>
+                <span className={`text-sm font-medium transition-colors ${draftFilters.jobType === option.value ? 'text-brand-600 dark:text-brand-400 font-bold' : 'text-slate-600 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-slate-200'}`}>
                   {option.label}
                 </span>
               </label>
@@ -127,7 +127,7 @@ export default function FiltersPanel({ filters, onApply }) {
         <div className="pt-2">
           <button
             onClick={handleApply}
-            className="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-md shadow-indigo-600/20 transition-all hover:shadow-lg hover:shadow-indigo-600/30 hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2"
+            className="w-full py-3 px-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-md shadow-brand-600/20 transition-all hover:shadow-lg hover:shadow-brand-600/30 hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2"
           >
             <Check className="w-4 h-4" />
             Apply Filters

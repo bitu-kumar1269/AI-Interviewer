@@ -92,7 +92,7 @@ export default function AdminAnalyticsPage() {
           <button
             onClick={handleExportReport}
             disabled={loading || !data}
-            className="btn-secondary text-xs px-4 py-2 flex items-center gap-1.5 hover:text-indigo-400"
+            className="btn-secondary text-xs px-4 py-2 flex items-center gap-1.5 hover:text-brand-400"
           >
             <Download size={13} />
             Export Report
@@ -112,13 +112,13 @@ export default function AdminAnalyticsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             
             {/* User Growth */}
-            <div className="card p-5 bg-[#0f0f22]/30 border-white/[0.06] flex items-center justify-between">
+            <div className="card p-5 bg-surface-card border-surface-border flex items-center justify-between">
               <div className="space-y-1">
                 <span className="text-slate-500 text-xs font-semibold">Candidates Registered</span>
                 <p className="text-2xl font-bold text-white mt-1 leading-none">{metrics.totalCandidates ?? 0}</p>
-                <p className="text-[10px] text-indigo-400">Premium: {metrics.premiumCandidates ?? 0}</p>
+                <p className="text-[10px] text-brand-400">Premium: {metrics.premiumCandidates ?? 0}</p>
               </div>
-              <div className="p-3 bg-indigo-500/10 rounded-2xl text-indigo-400">
+              <div className="p-3 bg-brand-500/10 rounded-2xl text-brand-400">
                 <TrendingUp size={20} />
               </div>
             </div>
@@ -165,9 +165,9 @@ export default function AdminAnalyticsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
             {/* Chart 1: User Growth Area Chart */}
-            <div className="card p-5 bg-[#0f0f22]/30 border-white/[0.06] space-y-4">
+            <div className="card p-5 bg-surface-card border-surface-border space-y-4">
               <h3 className="text-white text-xs font-bold uppercase tracking-wider flex items-center gap-2">
-                <TrendingUp size={14} className="text-indigo-400" />
+                <TrendingUp size={14} className="text-brand-400" />
                 Signups Growth Curve
               </h3>
               <div className="h-72">
@@ -175,15 +175,15 @@ export default function AdminAnalyticsPage() {
                   <AreaChart data={trends.users} margin={{ left: -20, top: 10, right: 10 }}>
                     <defs>
                       <linearGradient id="userGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#6366f1" stopOpacity={0.2}/>
-                        <stop offset="95%" stopColor="#6366f1" stopOpacity={0}/>
+                        <stop offset="5%" stopColor="#14b8a6" stopOpacity={0.25}/>
+                        <stop offset="95%" stopColor="#14b8a6" stopOpacity={0}/>
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
                     <XAxis dataKey="date" stroke="#64748b" fontSize={10} />
                     <YAxis stroke="#64748b" fontSize={10} allowDecimals={false} />
-                    <Tooltip contentStyle={{ backgroundColor: '#14142a', border: '1px solid rgba(255,255,255,0.1)', color: '#fff' }} />
-                    <Area type="monotone" dataKey="count" name="Signups" stroke="#6366f1" strokeWidth={2} fillOpacity={1} fill="url(#userGrad)" />
+                    <Tooltip contentStyle={{ backgroundColor: '#0a1124', border: '1px solid #142341', color: '#fff' }} />
+                    <Area type="monotone" dataKey="count" name="Signups" stroke="#14b8a6" strokeWidth={2} fillOpacity={1} fill="url(#userGrad)" />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
@@ -247,9 +247,9 @@ export default function AdminAnalyticsPage() {
             </div>
 
             {/* Chart 5: Weekly Retention Cohort Bar Chart */}
-            <div className="card p-5 bg-[#0f0f22]/30 border-white/[0.06] space-y-4 lg:col-span-2">
+            <div className="card p-5 bg-surface-card border-surface-border space-y-4 lg:col-span-2">
               <h3 className="text-white text-xs font-bold uppercase tracking-wider flex items-center gap-2">
-                <Percent size={14} className="text-violet-400" />
+                <Percent size={14} className="text-accent-400" />
                 Candidate Engagement Cohort Retention
               </h3>
               <div className="h-72">
@@ -258,8 +258,8 @@ export default function AdminAnalyticsPage() {
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
                     <XAxis type="number" stroke="#64748b" fontSize={10} unit="%" domain={[0, 100]} />
                     <YAxis type="category" dataKey="cohort" stroke="#64748b" fontSize={10} width={90} />
-                    <Tooltip formatter={(value) => [`${value}%`, 'Retention Rate']} contentStyle={{ backgroundColor: '#14142a', border: '1px solid rgba(255,255,255,0.1)', color: '#fff' }} />
-                    <Bar dataKey="rate" fill="#8b5cf6" radius={[0, 4, 4, 0]} />
+                    <Tooltip formatter={(value) => [`${value}%`, 'Retention Rate']} contentStyle={{ backgroundColor: '#0a1124', border: '1px solid #142341', color: '#fff' }} />
+                    <Bar dataKey="rate" fill="#3b82f6" radius={[0, 4, 4, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>

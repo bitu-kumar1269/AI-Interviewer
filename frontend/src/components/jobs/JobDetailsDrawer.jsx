@@ -70,7 +70,7 @@ export default function JobDetailsDrawer({ job, onClose }) {
                 {displayJob.title}
               </h2>
               <div className="flex items-center gap-2 text-lg font-medium text-slate-700 dark:text-slate-300">
-                <Building2 className="w-5 h-5 text-indigo-500" />
+                <Building2 className="w-5 h-5 text-brand-500" />
                 {displayJob.company}
               </div>
             </div>
@@ -114,7 +114,7 @@ export default function JobDetailsDrawer({ job, onClose }) {
               </h3>
               {isLoading ? (
                 <div className="flex flex-col items-center justify-center py-10 text-slate-400">
-                  <Loader2 className="w-8 h-8 animate-spin mb-3 text-indigo-500" />
+                  <Loader2 className="w-8 h-8 animate-spin mb-3 text-brand-500" />
                   <p className="text-sm font-medium">Loading full details...</p>
                 </div>
               ) : (
@@ -140,7 +140,7 @@ export default function JobDetailsDrawer({ job, onClose }) {
               href={applicationLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-3 rounded-xl font-bold text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-600/20 flex items-center gap-2 transition-all hover:-translate-y-0.5 active:translate-y-0"
+              className="px-8 py-3 rounded-xl font-bold text-white bg-brand-600 hover:bg-brand-700 shadow-lg shadow-brand-600/20 flex items-center gap-2 transition-all hover:-translate-y-0.5 active:translate-y-0"
             >
               Apply Now <ExternalLink className="w-4 h-4" />
             </a>

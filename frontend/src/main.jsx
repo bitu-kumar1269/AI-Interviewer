@@ -40,13 +40,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               toastOptions={{
                 duration: 4000,
                 style: {
-                  background: '#16162a',
-                  color:      '#f1f1ff',
-                  border:     '1px solid #2a2a4a',
+                  background: '#0a1124',
+                  color:      '#f8fafc',
+                  border:     '1px solid #142341',
                   borderRadius: '12px',
                   fontSize:   '14px',
                 },
-                success: { iconTheme: { primary: '#6366f1', secondary: '#fff' } },
+                success: { iconTheme: { primary: '#14b8a6', secondary: '#fff' } },
                 error:   { iconTheme: { primary: '#ef4444', secondary: '#fff' } },
               }}
             />

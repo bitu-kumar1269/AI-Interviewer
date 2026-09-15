@@ -16,3 +16,11 @@ Thumbs.db
 /backend/node_modules
 /backend/.env
 
+# devops - never commit real secrets or terraform state
+/devops/ansible/vars/secrets.yml
+/devops/terraform/.terraform/
+/devops/terraform/*.tfstate
+/devops/terraform/*.tfstate.backup
+/devops/terraform/.terraform.lock.hcl
+*.pem
+

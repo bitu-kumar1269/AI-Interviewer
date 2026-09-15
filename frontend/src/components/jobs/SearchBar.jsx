@@ -34,7 +34,7 @@ export default function SearchBar({ onSearch, initialQuery = '', initialLocation
   return (
     <div className="w-full relative z-20 group">
       {/* Premium Glow Effect */}
-      <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-500"></div>
+      <div className="absolute -inset-1 bg-gradient-to-r from-brand-500 to-accent-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-500"></div>
       
       <form 
         onSubmit={handleSubmit}
@@ -43,7 +43,7 @@ export default function SearchBar({ onSearch, initialQuery = '', initialLocation
         
         {/* Keywords Search */}
         <div className="flex-1 flex items-center px-4 py-3 md:py-2 border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800 w-full">
-          <Search className="w-5 h-5 text-indigo-500 mr-3 flex-shrink-0" />
+          <Search className="w-5 h-5 text-brand-500 mr-3 flex-shrink-0" />
           <input
             type="text"
             value={query}
@@ -60,7 +60,7 @@ export default function SearchBar({ onSearch, initialQuery = '', initialLocation
 
         {/* Location Search */}
         <div className="flex-1 flex items-center px-4 py-3 md:py-2 border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800 w-full transition-opacity duration-300">
-          <MapPin className={`w-5 h-5 mr-3 flex-shrink-0 ${isRemote ? 'text-slate-300 dark:text-slate-600' : 'text-indigo-500'}`} />
+          <MapPin className={`w-5 h-5 mr-3 flex-shrink-0 ${isRemote ? 'text-slate-300 dark:text-slate-600' : 'text-brand-500'}`} />
           <input
             type="text"
             value={isRemote ? 'Remote' : location}
@@ -81,7 +81,7 @@ export default function SearchBar({ onSearch, initialQuery = '', initialLocation
           
           {/* Remote Toggle */}
           <label className="flex items-center gap-2 cursor-pointer select-none group/toggle">
-            <div className="relative flex items-center justify-center w-5 h-5 rounded border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 group-hover/toggle:border-indigo-500 transition-colors">
+            <div className="relative flex items-center justify-center w-5 h-5 rounded border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800 group-hover/toggle:border-brand-500 transition-colors">
               <input
                 type="checkbox"
                 checked={isRemote}
@@ -89,7 +89,7 @@ export default function SearchBar({ onSearch, initialQuery = '', initialLocation
                 className="absolute opacity-0 w-full h-full cursor-pointer"
               />
               {isRemote && (
-                <div className="w-2.5 h-2.5 bg-indigo-600 rounded-sm" />
+                <div className="w-2.5 h-2.5 bg-brand-500 rounded-sm" />
               )}
             </div>
             <span className="text-sm font-bold text-slate-600 dark:text-slate-300 flex items-center gap-1.5 group-hover/toggle:text-slate-900 dark:group-hover/toggle:text-white transition-colors">
@@ -101,7 +101,7 @@ export default function SearchBar({ onSearch, initialQuery = '', initialLocation
           <button
             type="submit"
             disabled={isFetching}
-            className="px-6 py-3 md:py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl md:rounded-full shadow-md shadow-indigo-600/20 transition-all hover:shadow-lg hover:shadow-indigo-600/30 hover:-translate-y-0.5 active:translate-y-0 flex-shrink-0 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:-translate-y-0 flex items-center justify-center min-w-[100px]"
+            className="px-6 py-3 md:py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl md:rounded-full shadow-md shadow-brand-600/20 transition-all hover:shadow-lg hover:shadow-brand-600/30 hover:-translate-y-0.5 active:translate-y-0 flex-shrink-0 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:-translate-y-0 flex items-center justify-center min-w-[100px]"
           >
             {isFetching ? (
               <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

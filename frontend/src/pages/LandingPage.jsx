@@ -13,13 +13,13 @@ const FEATURES = [
     icon: Mic,
     title: '3D AI Voice Interviewer',
     desc: 'Practice spoken technical interviews with realistic neural speech synthesis, live mic recognition, and real-time audio reactions.',
-    color: 'from-cyan-600 to-blue-600',
+    color: 'from-brand-600 to-accent-600',
   },
   {
     icon: FileText,
     title: 'Resume-Aware Questions',
     desc: 'Upload your resume and get interview questions tailored to your actual experience, projects, and verified tech stack.',
-    color: 'from-brand-600 to-violet-600',
+    color: 'from-accent-600 to-brand-600',
   },
   {
     icon: BrainCircuit,
@@ -84,9 +84,9 @@ export default function LandingPage() {
       {/* ── Hero ─────────────────────────────────────────────────── */}
       <section className="relative pt-28 pb-20 px-6 overflow-hidden">
         {/* Glowing ambient light orbs */}
-        <div className="absolute top-16 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-brand-600/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-36 right-1/4 w-80 h-80 bg-violet-600/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-64 left-1/4 w-72 h-72 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-16 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-brand-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-36 right-1/4 w-80 h-80 bg-accent-600/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-64 left-1/4 w-72 h-72 bg-brand-400/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-6xl mx-auto text-center relative z-10">
           <motion.div
@@ -117,7 +117,7 @@ export default function LandingPage() {
                 href="#interactive-demo"
                 className="btn-secondary text-base px-8 py-4 flex items-center gap-2"
               >
-                <Radio className="w-4 h-4 text-cyan-400 animate-pulse" /> Try Voice Assistant Demo
+                <Radio className="w-4 h-4 text-brand-400 animate-pulse" /> Try Voice Assistant Demo
               </a>
             </div>
 

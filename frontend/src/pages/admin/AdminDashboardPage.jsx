@@ -137,7 +137,7 @@ export default function AdminDashboardPage() {
           label="Free Users"
           value={stats?.freeUsers}
           sub="Basic tier plan"
-          color="indigo"
+          color="teal"
           to="/admin/users"
         />
         <StatCard
@@ -161,7 +161,7 @@ export default function AdminDashboardPage() {
           label="Total Interviews"
           value={stats?.totalInterviews}
           sub="All-time generated"
-          color="purple"
+          color="blue"
           to="/admin/interviews"
         />
         <StatCard
@@ -212,7 +212,7 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* Platform Revenue Chart */}
-        <div className="card p-5 bg-[#0f0f22]/50 border-white/[0.06]">
+        <div className="card p-5 bg-surface-card border-surface-border">
           <h3 className="text-white text-sm font-semibold mb-4">Monthly Revenue Trends</h3>
           <div className="h-64">
             {loading ? (
@@ -238,7 +238,7 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* Total Interviews Chart */}
-        <div className="card p-5 bg-[#0f0f22]/50 border-white/[0.06]">
+        <div className="card p-5 bg-surface-card border-surface-border">
           <h3 className="text-white text-sm font-semibold mb-4">Interview Setup Growth</h3>
           <div className="h-64">
             {loading ? (
@@ -250,7 +250,7 @@ export default function AdminDashboardPage() {
                   <XAxis dataKey="month" stroke="#64748b" fontSize={11} tickLine={false} />
                   <YAxis stroke="#64748b" fontSize={11} tickLine={false} />
                   <Tooltip content={<CustomTooltip />} />
-                  <Bar dataKey="count" name="Interviews" fill="#8b5cf6" radius={[4, 4, 0, 0]} barSize={25} />
+                  <Bar dataKey="count" name="Interviews" fill="#14b8a6" radius={[4, 4, 0, 0]} barSize={25} />
                 </BarChart>
               </ResponsiveContainer>
             )}
@@ -258,7 +258,7 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* Daily Activity Chart */}
-        <div className="card p-5 bg-[#0f0f22]/50 border-white/[0.06]">
+        <div className="card p-5 bg-surface-card border-surface-border">
           <h3 className="text-white text-sm font-semibold mb-4">Weekly Engagement Matrix</h3>
           <div className="h-64">
             {loading ? (
@@ -321,7 +321,7 @@ export default function AdminDashboardPage() {
                     </div>
                     <p className="text-slate-400 text-xs mt-0.5">{act.message}</p>
                     {act.score !== undefined && act.score !== null && (
-                      <span className="inline-block mt-1 text-[10px] font-bold text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded">
+                      <span className="inline-block mt-1 text-[10px] font-bold text-brand-400 bg-brand-500/10 px-1.5 py-0.5 rounded">
                         Score: {act.score}%
                       </span>
                     )}
@@ -336,15 +336,15 @@ export default function AdminDashboardPage() {
         <div className="space-y-6 flex flex-col h-[400px]">
 
           {/* Quick System Actions */}
-          <div className="card p-5 bg-[#0f0f22]/50 border-white/[0.06]">
+          <div className="card p-5 bg-surface-card border-surface-border">
             <h3 className="text-white text-sm font-semibold mb-3">Quick Actions</h3>
             <div className="grid grid-cols-2 gap-2">
-              <Link to="/admin/users" className="flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.06] text-slate-300 text-xs font-medium transition-colors">
+              <Link to="/admin/users" className="flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-surface-border text-slate-300 text-xs font-medium transition-colors">
                 <UserPlus size={13} className="text-blue-400" />
                 Manage Users
               </Link>
-              <Link to="/admin/settings" className="flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.06] text-slate-300 text-xs font-medium transition-colors">
-                <Shield size={13} className="text-purple-400" />
+              <Link to="/admin/settings" className="flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-surface-border text-slate-300 text-xs font-medium transition-colors">
+                <Shield size={13} className="text-accent-400" />
                 System Audit
               </Link>
               <Link to="/admin/jobs" className="flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.06] text-slate-300 text-xs font-medium transition-colors">

@@ -55,7 +55,7 @@ export default function JobsPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4 tracking-tight"
         >
-          Find your next <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600">opportunity</span>
+          Find your next <span className="gradient-text">opportunity</span>
         </motion.h1>
         <motion.p 
           initial={{ opacity: 0 }}

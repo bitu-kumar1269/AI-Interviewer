@@ -65,9 +65,9 @@ export default function JobDetailsModal({ job, onClose }) {
                 <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> Posted</div>
                 <div className="font-bold text-slate-700 dark:text-slate-300">{postedDate}</div>
               </div>
-              <div className="bg-indigo-50 dark:bg-indigo-500/10 p-4 rounded-2xl border border-indigo-100 dark:border-indigo-500/20">
-                <div className="text-xs font-semibold text-indigo-400 uppercase tracking-wider mb-1">Match Score</div>
-                <div className="font-bold text-indigo-600 dark:text-indigo-400">{job.score ? `${job.score}%` : 'N/A'}</div>
+              <div className="bg-brand-50 dark:bg-brand-500/10 p-4 rounded-2xl border border-brand-100 dark:border-brand-500/20">
+                <div className="text-xs font-semibold text-brand-500 dark:text-brand-400 uppercase tracking-wider mb-1">Match Score</div>
+                <div className="font-bold text-brand-600 dark:text-brand-400">{job.score ? `${job.score}%` : 'N/A'}</div>
               </div>
             </div>
 
@@ -109,7 +109,7 @@ export default function JobDetailsModal({ job, onClose }) {
               href={job.apply_url || job.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-2.5 rounded-xl font-bold text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-600/30 flex items-center gap-2 transition-all hover:-translate-y-0.5"
+              className="px-6 py-2.5 rounded-xl font-bold text-white bg-brand-600 hover:bg-brand-700 shadow-lg shadow-brand-600/30 flex items-center gap-2 transition-all hover:-translate-y-0.5"
             >
               Apply on Adzuna <ExternalLink className="w-4 h-4" />
             </a>

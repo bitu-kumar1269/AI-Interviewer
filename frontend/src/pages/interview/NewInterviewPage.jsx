@@ -22,7 +22,7 @@ const EXPERIENCE_LEVELS = [
 
 const QUESTION_TYPES = [
   { value: 'technical',   label: 'Technical',     color: 'brand' },
-  { value: 'behavioral',  label: 'Behavioral',    color: 'violet' },
+  { value: 'behavioral',  label: 'Behavioral',    color: 'accent' },
   { value: 'situational', label: 'Situational',   color: 'emerald' },
   { value: 'hr',          label: 'HR',            color: 'amber' },
   { value: 'culture_fit', label: 'Culture Fit',   color: 'rose' },
@@ -161,7 +161,7 @@ export default function NewInterviewPage() {
               className="card p-8 space-y-6"
             >
               <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 bg-violet-600/20 rounded-xl"><Sliders className="w-5 h-5 text-violet-400" /></div>
+                <div className="p-2 bg-brand-500/20 rounded-xl"><Sliders className="w-5 h-5 text-brand-400" /></div>
                 <h3 className="text-xl font-display font-bold text-white">Preferences</h3>
               </div>
 

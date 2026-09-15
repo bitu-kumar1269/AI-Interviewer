@@ -138,9 +138,9 @@ export default function SessionResultPage() {
             </h3>
             <ResponsiveContainer width="100%" height={220}>
               <RadarChart data={radarData}>
-                <PolarGrid stroke="#2a2a4a" />
+                <PolarGrid stroke="#142341" />
                 <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 11 }} />
-                <Radar name="Score" dataKey="score" stroke="#6366f1" fill="#6366f1" fillOpacity={0.25} strokeWidth={2} />
+                <Radar name="Score" dataKey="score" stroke="#14b8a6" fill="#14b8a6" fillOpacity={0.25} strokeWidth={2} />
               </RadarChart>
             </ResponsiveContainer>
           </div>
@@ -148,16 +148,16 @@ export default function SessionResultPage() {
 
         <div className="card p-6">
           <h3 className="font-semibold text-white mb-4 flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-violet-400" /> Score Per Question
+            <TrendingUp className="w-5 h-5 text-accent-400" /> Score Per Question
           </h3>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={barData} barSize={24}>
               <XAxis dataKey="name" tick={{ fill: '#94a3b8', fontSize: 11 }} />
               <YAxis domain={[0, 10]} tick={{ fill: '#94a3b8', fontSize: 11 }} />
               <Tooltip
-                contentStyle={{ background: '#16162a', border: '1px solid #2a2a4a', borderRadius: '12px' }}
+                contentStyle={{ background: '#0a1124', border: '1px solid #142341', borderRadius: '12px' }}
                 labelStyle={{ color: '#fff' }}
-                itemStyle={{ color: '#a5b4fc' }}
+                itemStyle={{ color: '#5eead4' }}
               />
               <Bar dataKey="score" radius={[6, 6, 0, 0]}>
                 {barData.map((entry, i) => (

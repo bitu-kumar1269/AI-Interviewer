@@ -102,7 +102,7 @@ function ParsedDataPanel({ resume, onReparse }) {
 
       {/* Experience */}
       {Array.isArray(d.experience) && d.experience.length > 0 && (
-        <ParsedSection icon={Briefcase} title="Experience" color="text-violet-400">
+        <ParsedSection icon={Briefcase} title="Experience" color="text-accent-400">
           <div className="space-y-2">
             {d.experience.map((exp, i) => (
               <div key={i} className="p-3 rounded-xl bg-surface-border/30 border border-surface-border text-xs">

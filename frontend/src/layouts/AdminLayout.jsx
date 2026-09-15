@@ -61,9 +61,9 @@ export default function AdminLayout() {
   return (
     <div className={`flex h-screen overflow-hidden transition-colors duration-300 ${
       darkMode
-        ? 'bg-[#080814] text-white'
+        ? 'text-white'
         : 'bg-slate-100 text-slate-900'
-    }`}>
+    }`} style={darkMode ? { background: '#060b18' } : {}}>
 
       {/* ── Desktop Sidebar ──────────────────────────────────── */}
       <aside
@@ -72,11 +72,12 @@ export default function AdminLayout() {
           ${sidebarW}
           transition-all duration-300 ease-in-out
           ${darkMode
-            ? 'bg-[#0c0c1d] border-r border-white/[0.07]'
+            ? 'border-r border-surface-border'
             : 'bg-white border-r border-slate-200'
           }
           relative
         `}
+        style={darkMode ? { background: 'rgba(8,14,30,0.95)', backdropFilter: 'blur(20px)' } : {}}
       >
         {/* Sidebar content */}
         <div className={darkMode ? '' : 'admin-light'}>
@@ -124,8 +125,10 @@ export default function AdminLayout() {
         {/* Page content — scrollable */}
         <main className={`
           flex-1 overflow-y-auto
-          ${darkMode ? 'bg-[#080814]' : 'bg-slate-50'}
-        `}>
+          ${darkMode ? '' : 'bg-slate-50'}
+        `}
+        style={darkMode ? { background: '#060b18' } : {}}
+        >
           <div className="p-4 lg:p-6 max-w-[1600px] mx-auto">
             <Outlet />
           </div>

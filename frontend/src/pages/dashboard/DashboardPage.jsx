@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Trophy, ClipboardList, TrendingUp, Star,
-  Plus, ChevronRight, Clock, Building2
+  Plus, ChevronRight, Clock, Building2,
+  Zap, Target, BarChart3
 } from 'lucide-react';
 import { userAPI } from '@/services/api';
 import { useAuthStore } from '@/store/authStore';
@@ -12,22 +13,66 @@ import {
   AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid
 } from 'recharts';
 
-const StatCard = ({ icon: Icon, label, value, sub, color }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    className="card p-6 flex items-start gap-4"
-  >
-    <div className={`p-3 rounded-xl ${color}`}>
-      <Icon className="w-6 h-6" />
-    </div>
-    <div>
-      <p className="text-slate-400 text-sm">{label}</p>
-      <p className="text-3xl font-display font-bold text-white mt-1">{value}</p>
-      {sub && <p className="text-xs text-slate-500 mt-1">{sub}</p>}
-    </div>
-  </motion.div>
-);
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.4, delay, ease: 'easeOut' },
+});
+
+const STAT_CARDS = [
+  {
+    icon: ClipboardList,
+    label: 'Total Interviews',
+    key: 'totalSessions',
+    sub: 'All time sessions',
+    accent: 'stat-card-teal',
+    iconBg: 'bg-teal-500/15 text-teal-400',
+  },
+  {
+    icon: Trophy,
+    label: 'Completed',
+    key: 'completedSessions',
+    sub: 'Finished sessions',
+    accent: 'stat-card-emerald',
+    iconBg: 'bg-emerald-500/15 text-emerald-400',
+  },
+  {
+    icon: TrendingUp,
+    label: 'Avg. Score',
+    key: 'averageScore',
+    sub: 'Across all sessions',
+    suffix: '%',
+    accent: 'stat-card-blue',
+    iconBg: 'bg-blue-500/15 text-blue-400',
+  },
+  {
+    icon: Star,
+    label: 'Best Score',
+    key: 'bestScore',
+    sub: 'Personal best',
+    suffix: '%',
+    accent: 'stat-card-amber',
+    iconBg: 'bg-amber-500/15 text-amber-400',
+  },
+];
+
+const QUICK_ACTIONS = [
+  {
+    to: '/interviews/new', icon: Zap,
+    label: 'Start Interview', desc: 'Setup a new mock session',
+    bg: 'from-teal-600 to-teal-500', glow: 'shadow-[0_0_20px_rgba(13,148,136,0.4)]',
+  },
+  {
+    to: '/resumes', icon: ClipboardList,
+    label: 'Upload Resume', desc: 'Add your latest resume',
+    bg: 'from-blue-600 to-blue-500', glow: 'shadow-[0_0_20px_rgba(37,99,235,0.35)]',
+  },
+  {
+    to: '/sessions', icon: BarChart3,
+    label: 'View Progress', desc: 'Review past performance',
+    bg: 'from-emerald-600 to-emerald-500', glow: 'shadow-[0_0_20px_rgba(16,185,129,0.35)]',
+  },
+];
 
 export default function DashboardPage() {
   const { user } = useAuthStore();
@@ -42,134 +87,180 @@ export default function DashboardPage() {
   }, []);
 
   const scoreData = [
-    { name: 'Score', value: stats?.averageScore ?? 0, fill: '#6366f1' },
+    { name: 'Score', value: stats?.averageScore ?? 0, fill: '#14b8a6' },
   ];
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      {/* Greeting */}
+    <div className="space-y-7 animate-fade-in">
+
+      {/* ── Greeting Row ─────────────────────────────────────── */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-display font-bold text-white">
-            Good day, <span className="gradient-text">{user?.name?.split(' ')[0]}</span> 👋
+          <h2 className="text-2xl font-display font-bold text-slate-100">
+            Good day,{' '}
+            <span className="gradient-text">{user?.name?.split(' ')[0]}</span>{' '}
+            👋
           </h2>
-          <p className="text-slate-400 mt-1">Ready to practice? Let&apos;s crush your next interview.</p>
+          <p className="text-slate-500 mt-1 text-sm">
+            Ready to practice? Let&apos;s crush your next interview.
+          </p>
         </div>
-        <Link to="/interviews/new" className="btn-primary hidden sm:inline-flex">
+        <Link to="/interviews/new" className="btn-primary hidden sm:inline-flex gap-2">
           <Plus className="w-4 h-4" />
           New Interview
         </Link>
       </div>
 
-      {/* Stats Grid */}
+      {/* ── Stat Cards ───────────────────────────────────────── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        <StatCard
-          icon={ClipboardList} label="Total Interviews" color="bg-brand-600/20 text-brand-400"
-          value={loading ? '—' : stats?.totalSessions ?? 0}
-          sub="All time sessions"
-        />
-        <StatCard
-          icon={Trophy} label="Completed" color="bg-emerald-600/20 text-emerald-400"
-          value={loading ? '—' : stats?.completedSessions ?? 0}
-          sub="Finished sessions"
-        />
-        <StatCard
-          icon={TrendingUp} label="Avg. Score" color="bg-violet-600/20 text-violet-400"
-          value={loading ? '—' : `${stats?.averageScore ?? 0}%`}
-          sub="Across all sessions"
-        />
-        <StatCard
-          icon={Star} label="Best Score" color="bg-amber-600/20 text-amber-400"
-          value={loading ? '—' : `${stats?.bestScore ?? 0}%`}
-          sub="Personal best"
-        />
+        {STAT_CARDS.map(({ icon: Icon, label, key, sub, suffix = '', accent, iconBg }, i) => (
+          <motion.div key={key} {...fadeUp(i * 0.07)} className={`stat-card ${accent}`}>
+            {/* subtle corner glow */}
+            <div className="absolute top-0 right-0 w-24 h-24 rounded-full opacity-5 bg-white pointer-events-none" />
+            <div className="flex items-start gap-4">
+              <div className={`p-3 rounded-xl flex-shrink-0 ${iconBg}`}>
+                <Icon className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-slate-600 dark:text-slate-500 text-xs font-medium">{label}</p>
+                <p className="text-3xl font-display font-bold text-slate-900 dark:text-slate-100 mt-0.5 leading-none">
+                  {loading ? '—' : `${stats?.[key] ?? 0}${suffix}`}
+                </p>
+                <p className="text-xs text-slate-500 dark:text-slate-600 mt-1.5">{sub}</p>
+              </div>
+            </div>
+          </motion.div>
+        ))}
       </div>
 
-      {/* Charts + Recent */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {/* ── Charts + Recent ───────────────────────────────────── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+
         {/* Score Gauge */}
-        <div className="card p-6 flex flex-col items-center justify-center">
-          <h3 className="text-sm font-medium text-slate-400 mb-4">Average Performance</h3>
-          <ResponsiveContainer width="100%" height={160}>
-            <RadialBarChart innerRadius="60%" outerRadius="90%" data={scoreData} startAngle={90} endAngle={-270}>
-              <RadialBar background={{ fill: '#2a2a4a' }} dataKey="value" cornerRadius={8} />
-            </RadialBarChart>
-          </ResponsiveContainer>
-          <p className="text-4xl font-display font-bold gradient-text -mt-4">
-            {stats?.averageScore ?? 0}%
-          </p>
-          <p className="text-slate-500 text-xs mt-1">Overall score</p>
-        </div>
+        <motion.div {...fadeUp(0.2)} className="card p-6 flex flex-col items-center justify-center relative overflow-hidden">
+          {/* bg teal orb */}
+          <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-teal-500/5 blur-2xl pointer-events-none" />
+          <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-4">
+            Avg. Performance
+          </h3>
+          <div className="relative">
+            <ResponsiveContainer width={160} height={160}>
+              <RadialBarChart
+                innerRadius="65%"
+                outerRadius="92%"
+                data={scoreData}
+                startAngle={90}
+                endAngle={-270}
+              >
+                <RadialBar
+                  background={{ fill: 'var(--progress-track)' }}
+                  dataKey="value"
+                  cornerRadius={6}
+                />
+              </RadialBarChart>
+            </ResponsiveContainer>
+            {/* center text */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <p className="text-3xl font-display font-bold gradient-text leading-none">
+                {stats?.averageScore ?? 0}%
+              </p>
+            </div>
+          </div>
+          <p className="text-slate-600 text-xs mt-2 tracking-wide">Overall score</p>
+        </motion.div>
 
         {/* Recent Sessions */}
-        <div className="card p-6 lg:col-span-2">
-          <div className="flex items-center justify-between mb-5">
-            <h3 className="font-semibold text-white">Recent Sessions</h3>
-            <Link to="/sessions" className="btn-ghost text-xs">View all <ChevronRight className="w-3 h-3" /></Link>
+        <motion.div {...fadeUp(0.25)} className="card p-5 lg:col-span-2">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-semibold text-slate-200 text-sm flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-teal-400 inline-block animate-pulse" />
+              Recent Sessions
+            </h3>
+            <Link to="/sessions" className="btn-ghost text-xs text-teal-400 hover:text-teal-300">
+              View all <ChevronRight className="w-3 h-3" />
+            </Link>
           </div>
 
           {!stats?.recentSessions?.length ? (
             <div className="text-center py-10">
-              <ClipboardList className="w-10 h-10 text-slate-600 mx-auto mb-3" />
-              <p className="text-slate-500">No sessions yet</p>
-              <Link to="/interviews/new" className="btn-primary mt-4 inline-flex">Start practicing</Link>
+              <div className="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center mx-auto mb-3">
+                <ClipboardList className="w-6 h-6 text-teal-500/60" />
+              </div>
+              <p className="text-slate-500 text-sm">No sessions yet</p>
+              <Link to="/interviews/new" className="btn-primary mt-4 inline-flex text-xs px-4 py-2">
+                Start practicing
+              </Link>
             </div>
           ) : (
-            <div className="space-y-3">
-              {stats.recentSessions.map((session) => (
-                <Link
-                  key={session._id}
-                  to={`/sessions/${session._id}/results`}
-                  className="flex items-center justify-between p-4 rounded-xl bg-surface hover:bg-surface-hover border border-surface-border transition-all group"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-brand-600/20 rounded-lg">
-                      <Building2 className="w-4 h-4 text-brand-400" />
+            <div className="space-y-2">
+              {stats.recentSessions.map((session) => {
+                const score = session.overallScore;
+                const scoreCls = score >= 70
+                  ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'
+                  : score >= 40
+                  ? 'text-amber-400 bg-amber-500/10 border-amber-500/20'
+                  : 'text-rose-400 bg-rose-500/10 border-rose-500/20';
+
+                return (
+                  <Link
+                    key={session._id}
+                    to={`/sessions/${session._id}/results`}
+                    className="flex items-center justify-between p-3.5 rounded-xl border border-surface-border hover:border-teal-500/30 bg-surface hover:bg-surface-hover transition-all group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-teal-500/10 rounded-lg border border-teal-500/15 group-hover:border-teal-500/30 transition-colors">
+                        <Building2 className="w-4 h-4 text-teal-400" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-slate-200 group-hover:text-white transition-colors">
+                          {session.interviewId?.jobTitle}
+                        </p>
+                        <p className="text-xs text-slate-600 flex items-center gap-1 mt-0.5">
+                          <Clock className="w-3 h-3" />
+                          {new Date(session.createdAt).toLocaleDateString()}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-sm font-medium text-white">{session.interviewId?.jobTitle}</p>
-                      <p className="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
-                        <Clock className="w-3 h-3" />
-                        {new Date(session.createdAt).toLocaleDateString()}
-                      </p>
+                    <div className="flex items-center gap-2">
+                      <span className={`text-xs font-bold px-2.5 py-1 rounded-full border ${scoreCls}`}>
+                        {score}%
+                      </span>
+                      <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-teal-400 transition-colors" />
                     </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className={`badge ${session.overallScore >= 70 ? 'badge-success' : session.overallScore >= 40 ? 'badge-warning' : 'badge-danger'}`}>
-                      {session.overallScore}%
-                    </span>
-                    <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-brand-400 transition-colors" />
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                );
+              })}
             </div>
           )}
-        </div>
+        </motion.div>
       </div>
 
-      {/* Quick Actions */}
-      <div className="card p-6">
-        <h3 className="font-semibold text-white mb-4">Quick Actions</h3>
+      {/* ── Quick Actions ─────────────────────────────────────── */}
+      <motion.div {...fadeUp(0.3)} className="card p-5">
+        <h3 className="font-semibold text-slate-200 text-sm mb-4 flex items-center gap-2">
+          <Target className="w-4 h-4 text-teal-400" />
+          Quick Actions
+        </h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          {[
-            { to: '/interviews/new', icon: Plus, label: 'Create Interview', desc: 'Setup a new mock session', color: 'from-brand-600 to-violet-600' },
-            { to: '/resumes', icon: ClipboardList, label: 'Upload Resume', desc: 'Add your latest resume', color: 'from-emerald-600 to-teal-600' },
-            { to: '/sessions', icon: TrendingUp, label: 'View Progress', desc: 'Review past performance', color: 'from-amber-600 to-orange-600' },
-          ].map(({ to, icon: Icon, label, desc, color }) => (
-            <Link key={to} to={to}
-              className="flex items-center gap-4 p-4 rounded-xl bg-surface border border-surface-border hover:border-brand-500/50 hover:bg-surface-hover transition-all group"
+          {QUICK_ACTIONS.map(({ to, icon: Icon, label, desc, bg, glow }) => (
+            <Link
+              key={to}
+              to={to}
+              className="flex items-center gap-4 p-4 rounded-xl border border-surface-border hover:border-teal-500/30 bg-surface hover:bg-surface-hover transition-all group"
             >
-              <div className={`p-3 rounded-xl bg-gradient-to-br ${color} flex-shrink-0`}>
+              <div className={`p-3 rounded-xl bg-gradient-to-br ${bg} ${glow} flex-shrink-0 group-hover:scale-105 transition-transform`}>
                 <Icon className="w-5 h-5 text-white" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-white">{label}</p>
-                <p className="text-xs text-slate-500">{desc}</p>
+                <p className="text-sm font-semibold text-slate-200 group-hover:text-white transition-colors">
+                  {label}
+                </p>
+                <p className="text-xs text-slate-500 mt-0.5">{desc}</p>
               </div>
             </Link>
           ))}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
