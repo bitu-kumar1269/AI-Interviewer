@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { io } from 'socket.io-client';
 import { interviewAPI, sessionAPI } from '@/services/api';
+import { getSocketUrl } from '@/utils/apiUrl';
 import toast from 'react-hot-toast';
 
 const DIFFICULTY_CLR = { easy: 'badge-success', medium: 'badge-warning', hard: 'badge-danger' };
@@ -33,7 +34,7 @@ export default function InterviewSessionPage() {
   const [isReceivingFeedback, setIsReceivingFeedback] = useState(false);
 
   useEffect(() => {
-    const s = io(import.meta.env.VITE_API_URL || 'http://localhost:5000', { withCredentials: true });
+    const s = io(getSocketUrl(), { withCredentials: true });
     setSocket(s);
     
     s.on("ai_chunk", (chunk) => {

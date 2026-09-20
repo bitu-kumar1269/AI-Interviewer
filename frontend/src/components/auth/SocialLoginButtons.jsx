@@ -6,9 +6,9 @@
  * which then redirects back to our backend, then to /oauth-callback.
  */
 
-// VITE_API_URL usually points at ".../api" — OAuth routes live under
-// that same /api/auth/* prefix on the backend.
-const API_BASE = import.meta.env.VITE_API_URL || '/api';
+import { getApiBaseUrl } from '@/utils/apiUrl';
+
+const API_BASE = getApiBaseUrl();
 
 const PROVIDERS = [
   {

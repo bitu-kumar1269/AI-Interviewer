@@ -2,7 +2,10 @@ const User = require('../models/User.model');
 const oauthService = require('../services/oauth.service');
 const { generateAccessToken, generateRefreshToken } = require('../utils/jwt.utils');
 
-const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173';
+const getPrimaryClientUrl = () => {
+  const raw = process.env.CLIENT_URL || 'http://localhost:5173';
+  return raw.split(',')[0].trim().replace(/\/+$/, '');
+};
 
 /**
  * Finds an existing user by provider ID or email, or creates a new one.
@@ -42,14 +45,16 @@ const findOrCreateOAuthUser = async ({ provider, profile }) => {
  * they are never sent to the server or logged in server access logs.
  */
 const redirectWithTokens = (res, user) => {
+  const clientUrl = getPrimaryClientUrl();
   const accessToken = generateAccessToken(user._id);
   const refreshToken = generateRefreshToken(user._id);
-  const redirectUrl = `${CLIENT_URL}/oauth-callback#accessToken=${accessToken}&refreshToken=${refreshToken}`;
+  const redirectUrl = `${clientUrl}/oauth-callback#accessToken=${accessToken}&refreshToken=${refreshToken}`;
   res.redirect(redirectUrl);
 };
 
 const redirectWithError = (res, message) => {
-  const redirectUrl = `${CLIENT_URL}/login?oauthError=${encodeURIComponent(message)}`;
+  const clientUrl = getPrimaryClientUrl();
+  const redirectUrl = `${clientUrl}/login?oauthError=${encodeURIComponent(message)}`;
   res.redirect(redirectUrl);
 };
 

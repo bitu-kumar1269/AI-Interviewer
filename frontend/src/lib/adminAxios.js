@@ -13,9 +13,10 @@
  */
 
 import axios from 'axios';
+import { getApiBaseUrl } from '@/utils/apiUrl';
 
 const STORAGE_KEY = 'ai-admin-auth';
-const BASE_URL    = import.meta.env.VITE_API_URL || '/api';
+const BASE_URL    = getApiBaseUrl();
 
 // ─── Axios Instance ───────────────────────────────────────────────
 const adminApi = axios.create({

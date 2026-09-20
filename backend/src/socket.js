@@ -6,9 +6,30 @@ const SystemPrompt = require('./models/SystemPrompt.model');
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const initSocket = (httpServer) => {
+  const getAllowedOrigins = () => {
+    const rawAllowed = process.env.CLIENT_URL || 'http://localhost:5173';
+    return rawAllowed
+      .split(',')
+      .map((url) => url.trim().replace(/\/+$/, ''))
+      .filter(Boolean);
+  };
+
   const io = new Server(httpServer, {
     cors: {
-      origin: process.env.CLIENT_URL || "http://localhost:5173",
+      origin: (origin, callback) => {
+        if (!origin) return callback(null, true);
+        const normalized = origin.replace(/\/+$/, '');
+        const allowed = getAllowedOrigins();
+
+        if (
+          allowed.includes(normalized) ||
+          /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(normalized) ||
+          /^https:\/\/[a-zA-Z0-9-]+\.onrender\.com$/.test(normalized)
+        ) {
+          return callback(null, true);
+        }
+        return callback(null, false);
+      },
       methods: ["GET", "POST"],
       credentials: true,
     },

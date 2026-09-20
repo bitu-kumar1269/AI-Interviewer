@@ -65,26 +65,48 @@ app.use(compression({
 }));
 
 // ─── CORS ─────────────────────────────────────────────────────────
+const getAllowedOrigins = () => {
+  const rawAllowed = process.env.CLIENT_URL || 'http://localhost:5173';
+  return rawAllowed
+    .split(',')
+    .map((url) => url.trim().replace(/\/+$/, ''))
+    .filter(Boolean);
+};
+
 app.use(cors({
   origin: (origin, callback) => {
-    const allowed = process.env.CLIENT_URL || 'http://localhost:5173';
-    // Let local dev and exact matches through instantly
-    if (!origin || origin === allowed) return callback(null, true);
-    
-    // Normalize both for comparison (remove trailing slashes)
-    const normalizedOrigin  = origin.replace(/\/$/, '');
-    const normalizedAllowed = allowed.replace(/\/$/, '');
+    // Allow non-browser requests (Postman, server-to-server, curl)
+    if (!origin) return callback(null, true);
 
-    if (normalizedOrigin === normalizedAllowed) {
-      callback(null, true);
-    } else {
-      console.warn(`[CORS] Rejected origin: ${origin} (Expected: ${allowed})`);
-      callback(null, false); // Don't throw error, just deny CORS
+    const normalizedOrigin = origin.replace(/\/+$/, '');
+    const allowedOrigins = getAllowedOrigins();
+
+    // Check exact configured origins
+    if (allowedOrigins.includes(normalizedOrigin)) {
+      return callback(null, true);
     }
+
+    // Allow localhost/127.0.0.1 for development
+    if (
+      process.env.NODE_ENV !== 'production' ||
+      /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(normalizedOrigin)
+    ) {
+      if (/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(normalizedOrigin)) {
+        return callback(null, true);
+      }
+    }
+
+    // Seamlessly allow Render frontend services (*.onrender.com)
+    if (/^https:\/\/[a-zA-Z0-9-]+\.onrender\.com$/.test(normalizedOrigin)) {
+      return callback(null, true);
+    }
+
+    console.warn(`[CORS] Rejected origin: ${origin} (Configured: ${allowedOrigins.join(', ')})`);
+    return callback(null, false);
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'Accept', 'X-Requested-With'],
 }));
 
 
