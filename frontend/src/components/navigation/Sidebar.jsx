@@ -1,8 +1,7 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { clsx } from 'clsx';
 import {
-  BrainCircuit,
   LayoutDashboard,
   MessageSquarePlus,
   ClipboardList,
@@ -82,12 +81,10 @@ function SidebarContent({ user, onLogout, onNavClick }) {
 
       {/* ── Brand Header ─────────────────────────────────────── */}
       <div className="px-5 py-5 border-b border-surface-border">
-        <div className="flex items-center gap-3">
+        <Link to="/dashboard" onClick={onNavClick} className="flex items-center gap-3 group">
           {/* Logo mark */}
-          <div className="relative w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-            style={{ background: 'linear-gradient(135deg, #0d9488, #14b8a6, #2563eb)', boxShadow: '0 0 20px rgba(13,148,136,0.4)' }}
-          >
-            <BrainCircuit className="w-5 h-5 text-white" />
+          <div className="relative w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 p-0.5 bg-gradient-to-br from-teal-500/20 via-brand-500/20 to-blue-500/30 border border-teal-500/30 shadow-lg shadow-teal-500/10 group-hover:scale-105 transition-transform overflow-hidden">
+            <img src="/AI-interview-svg-icon.png" alt="InterviewAI" className="w-full h-full object-cover rounded-lg" />
             {/* live indicator */}
             <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2"
               style={{ background: '#10b981', borderColor: '#080e1c' }}
@@ -98,7 +95,7 @@ function SidebarContent({ user, onLogout, onNavClick }) {
 
           <div>
             <div className="flex items-center gap-1">
-              <span className="font-display font-bold text-base text-white tracking-tight">
+              <span className="font-display font-bold text-base text-slate-900 dark:text-white tracking-tight">
                 Interview
               </span>
               <span className="font-display font-bold text-base tracking-tight gradient-text">
@@ -112,7 +109,7 @@ function SidebarContent({ user, onLogout, onNavClick }) {
               Cockpit v2.0
             </p>
           </div>
-        </div>
+        </Link>
       </div>
 
       {/* ── Navigation ───────────────────────────────────────── */}

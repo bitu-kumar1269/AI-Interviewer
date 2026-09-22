@@ -117,12 +117,12 @@ export default function LandingPage() {
       {/* ── Navbar ──────────────────────────────────────────────── */}
       <nav className="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-surface-border">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="p-1.5 bg-gradient-brand rounded-lg shadow-brand">
-              <BrainCircuit className="w-5 h-5 text-white" />
+          <Link to="/" className="flex items-center gap-2.5 group">
+            <div className="w-8 h-8 rounded-xl overflow-hidden shadow-brand flex items-center justify-center border border-brand-400/30 group-hover:scale-105 transition-transform">
+              <img src="/AI-interview-svg-icon.png" alt="InterviewAI" className="w-full h-full object-cover" />
             </div>
             <span className="font-display font-bold text-lg gradient-text">InterviewAI</span>
-          </div>
+          </Link>
 
           {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center gap-8">
@@ -174,9 +174,9 @@ export default function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <span className="badge-brand badge mb-6 inline-flex items-center gap-2 px-3 py-1">
-              <Sparkles className="w-3.5 h-3.5 text-brand-400" />
-              Interactive 3D Simulation • Real-Time Voice Intelligence
+            <span className="badge-brand badge mb-6 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-brand-500/20 bg-brand-500/10 backdrop-blur-md shadow-sm">
+              <img src="/AI-interview-svg-icon.png" alt="Icon" className="w-4 h-4 rounded-sm object-cover" />
+              <span>Interactive 3D Simulation • Real-Time Voice Intelligence</span>
             </span>
 
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold text-white leading-tight mb-6">
@@ -455,8 +455,8 @@ export default function LandingPage() {
           viewport={{ once: true }}
           className="max-w-2xl mx-auto relative z-10"
         >
-          <div className="w-16 h-16 bg-gradient-brand rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-brand">
-            <BrainCircuit className="w-8 h-8 text-white" />
+          <div className="w-16 h-16 rounded-2xl p-1 bg-gradient-to-br from-brand-500/20 via-accent-600/30 to-teal-500/20 border border-brand-400/30 flex items-center justify-center mx-auto mb-6 shadow-brand shadow-lg overflow-hidden">
+            <img src="/AI-interview-svg-icon.png" alt="InterviewAI" className="w-full h-full object-cover rounded-xl" />
           </div>
           <h2 className="text-4xl sm:text-5xl font-display font-bold text-white mb-4">
             Ready to nail your next interview?
@@ -474,12 +474,12 @@ export default function LandingPage() {
       <footer className="border-t border-surface-border py-12 px-6 bg-surface-card/20">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
-            <div className="flex items-center gap-2.5">
-              <div className="p-1.5 bg-gradient-brand rounded-lg shadow-brand">
-                <BrainCircuit className="w-5 h-5 text-white" />
+            <Link to="/" className="flex items-center gap-2.5 group">
+              <div className="w-8 h-8 rounded-xl overflow-hidden shadow-brand flex items-center justify-center border border-brand-400/30 group-hover:scale-105 transition-transform">
+                <img src="/AI-interview-svg-icon.png" alt="InterviewAI" className="w-full h-full object-cover" />
               </div>
               <span className="font-display font-bold text-lg text-white">InterviewAI</span>
-            </div>
+            </Link>
             <div className="flex items-center gap-6 text-sm text-slate-400">
               <a href="#skills-section" className="hover:text-white transition-colors">Skills</a>
               <a href="#features-section" className="hover:text-white transition-colors">Features</a>

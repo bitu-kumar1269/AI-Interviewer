@@ -29,8 +29,9 @@ export default function AuthLayout() {
       <div className="absolute top-6 left-6 z-20 flex items-center gap-3">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-300 px-4 py-2 rounded-full bg-white/80 dark:bg-[#080c18]/70 hover:bg-white dark:hover:bg-[#0d1424]/90 border border-slate-200 dark:border-cyan-500/30 hover:border-cyan-500/40 backdrop-blur-xl shadow-sm dark:shadow-[0_0_20px_rgba(6,182,212,0.15)] transition-all duration-200 group"
+          className="inline-flex items-center gap-2.5 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-300 px-3.5 py-2 rounded-full bg-white/80 dark:bg-[#080c18]/70 hover:bg-white dark:hover:bg-[#0d1424]/90 border border-slate-200 dark:border-cyan-500/30 hover:border-cyan-500/40 backdrop-blur-xl shadow-sm dark:shadow-[0_0_20px_rgba(6,182,212,0.15)] transition-all duration-200 group"
         >
+          <img src="/AI-interview-svg-icon.png" alt="InterviewAI Logo" className="w-5 h-5 rounded-full object-cover shadow-sm" />
           <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5 text-cyan-500 dark:text-cyan-400" />
           <span>Back to Home</span>
         </Link>

@@ -132,8 +132,8 @@ export default function AdminSidebar({ collapsed, onNavClick }) {
 
       {/* ── Brand / Logo ─────────────────────────────────────── */}
       <div className={`flex items-center gap-3 px-4 h-16 border-b border-white/[0.07] flex-shrink-0 ${collapsed ? 'justify-center' : ''}`}>
-        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center flex-shrink-0 shadow-md shadow-red-500/20">
-          <Shield size={16} className="text-white" />
+        <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden shadow-md shadow-brand-500/20 p-0.5 bg-gradient-to-br from-red-500/30 to-brand-500/30 border border-white/10">
+          <img src="/AI-interview-svg-icon.png" alt="AI Interviewer" className="w-full h-full object-cover rounded-md" />
         </div>
         {!collapsed && (
           <div className="min-w-0">

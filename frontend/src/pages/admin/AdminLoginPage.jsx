@@ -74,8 +74,8 @@ export default function AdminLoginPage() {
 
           {/* Logo / Title */}
           <div className="text-center mb-8">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-red-500/20">
-              <Shield size={26} className="text-white" />
+            <div className="w-16 h-16 rounded-2xl p-1 bg-gradient-to-br from-red-500/20 to-orange-500/30 border border-red-500/30 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-red-500/20 overflow-hidden">
+              <img src="/AI-interview-svg-icon.png" alt="AI Interviewer" className="w-full h-full object-cover rounded-xl" />
             </div>
             <h1 className="text-2xl font-bold text-white">Admin Dashboard</h1>
             <p className="text-slate-400 text-sm mt-1">Sign in with your admin credentials</p>

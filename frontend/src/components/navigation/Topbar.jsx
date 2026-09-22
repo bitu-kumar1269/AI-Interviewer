@@ -30,6 +30,9 @@ export default function Topbar({ onMenuClick }) {
         >
           <Menu className="w-5 h-5" />
         </button>
+        <Link to="/dashboard" className="flex items-center gap-2 lg:hidden" aria-label="Go to Dashboard">
+          <img src="/AI-interview-svg-icon.png" alt="InterviewAI" className="w-6 h-6 rounded-lg object-contain shadow-sm" />
+        </Link>
         <div className="flex items-center gap-2">
           {/* teal dot */}
           <span className="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-teal-400" />

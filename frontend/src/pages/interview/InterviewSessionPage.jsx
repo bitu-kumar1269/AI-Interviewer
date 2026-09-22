@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronRight, ChevronLeft, SkipForward, CheckCircle,
-  Clock, Mic, Send, Loader2, AlertCircle, BrainCircuit, Volume2, VolumeX, MessageSquare
+  Clock, Mic, Send, Loader2, AlertCircle, Volume2, VolumeX, MessageSquare
 } from 'lucide-react';
 import { io } from 'socket.io-client';
 import { interviewAPI, sessionAPI } from '@/services/api';
@@ -246,7 +246,9 @@ export default function InterviewSessionPage() {
     return (
       <div className="flex items-center justify-center h-96">
         <div className="text-center">
-          <BrainCircuit className="w-12 h-12 text-brand-400 mx-auto mb-4 animate-pulse" />
+          <div className="w-14 h-14 mx-auto mb-4 rounded-2xl p-1 bg-gradient-to-br from-brand-500/20 to-accent-600/30 border border-brand-400/30 shadow-lg shadow-brand-500/20 animate-pulse flex items-center justify-center overflow-hidden">
+            <img src="/AI-interview-svg-icon.png" alt="Loading" className="w-full h-full object-cover rounded-xl" />
+          </div>
           <p className="text-slate-400">Loading your interview session...</p>
         </div>
       </div>

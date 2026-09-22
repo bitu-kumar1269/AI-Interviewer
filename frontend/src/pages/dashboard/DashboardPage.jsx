@@ -94,18 +94,29 @@ export default function DashboardPage() {
     <div className="space-y-7 animate-fade-in">
 
       {/* ── Greeting Row ─────────────────────────────────────── */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-display font-bold text-slate-100">
-            Good day,{' '}
-            <span className="gradient-text">{user?.name?.split(' ')[0]}</span>{' '}
-            👋
-          </h2>
-          <p className="text-slate-500 mt-1 text-sm">
-            Ready to practice? Let&apos;s crush your next interview.
-          </p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl border border-surface-border bg-gradient-to-r from-surface-card/90 via-surface-card/40 to-teal-500/5 backdrop-blur-xl relative overflow-hidden">
+        {/* Glow corner */}
+        <div className="absolute top-0 right-0 w-48 h-48 rounded-full bg-teal-500/10 blur-3xl pointer-events-none" />
+
+        <div className="flex items-center gap-4">
+          <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-2xl p-1 bg-gradient-to-br from-teal-500/20 via-brand-500/20 to-blue-500/30 border border-teal-500/30 flex-shrink-0 shadow-lg shadow-teal-500/10 flex items-center justify-center">
+            <img src="/AI-interview-svg-icon.png" alt="InterviewAI Coach" className="w-full h-full object-cover rounded-xl" />
+            <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-[#080e1c] flex items-center justify-center">
+              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+            </span>
+          </div>
+          <div>
+            <h2 className="text-xl sm:text-2xl font-display font-bold text-slate-900 dark:text-slate-100">
+              Good day,{' '}
+              <span className="gradient-text">{user?.name?.split(' ')[0]}</span>{' '}
+              👋
+            </h2>
+            <p className="text-slate-500 mt-0.5 text-xs sm:text-sm">
+              Ready to practice? Your AI interview coach is active &amp; ready.
+            </p>
+          </div>
         </div>
-        <Link to="/interviews/new" className="btn-primary hidden sm:inline-flex gap-2">
+        <Link to="/interviews/new" className="btn-primary inline-flex self-start sm:self-auto gap-2">
           <Plus className="w-4 h-4" />
           New Interview
         </Link>
