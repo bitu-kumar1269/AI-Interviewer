@@ -2,6 +2,12 @@ const mongoose = require('mongoose');
 const logger = require('./logger');
 
 const connectDB = async () => {
+  // On warm serverless invocations, the connection from a previous
+  // invocation may still be open — skip reconnecting in that case.
+  if (mongoose.connection.readyState === 1) {
+    return mongoose.connection;
+  }
+
   try {
     const conn = await mongoose.connect(process.env.MONGO_URI, {
       serverSelectionTimeoutMS: 8000,

@@ -38,49 +38,27 @@ exports.uploadResume = async (req, res, next) => {
     return next(new AppError('Please upload a file.', 400));
   }
 
-  const { originalname, filename, size, mimetype, path: localFilePath } = req.file;
+  const { originalname, buffer, size, mimetype } = req.file;
 
-  // Build local file URL
-  const baseUrl = `${req.protocol}://${req.get('host')}`;
-  let fileUrl = `${baseUrl}/uploads/resumes/${filename}`;
-  let publicId = filename;
+  if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+    return next(new AppError('File storage is not configured on the server (missing Cloudinary credentials).', 500));
+  }
 
-  // Attempt Cloudinary upload if configured (non-blocking fallback)
-  if (process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET) {
-    try {
-      const uploadResult = await new Promise((resolve, reject) => {
-        let settled = false;
-        const safeReject = (err) => {
-          if (!settled) {
-            settled = true;
-            reject(err);
-          }
-        };
-        const safeResolve = (res) => {
-          if (!settled) {
-            settled = true;
-            resolve(res);
-          }
-        };
-        const stream = cloudinary.uploader.upload_stream(
-          { folder: 'ai-interview/resumes', resource_type: 'auto', public_id: `resume-${Date.now()}` },
-          (error, result) => {
-            if (error) safeReject(error);
-            else safeResolve(result);
-          }
-        );
-        stream.on('error', safeReject);
-        const readStream = fs.createReadStream(localFilePath);
-        readStream.on('error', safeReject);
-        readStream.pipe(stream);
-      });
-      if (uploadResult && uploadResult.secure_url) {
-        fileUrl = uploadResult.secure_url;
-        publicId = uploadResult.public_id;
-      }
-    } catch (cloudErr) {
-      console.warn('[ResumeUpload] Cloudinary upload skipped, using local storage:', cloudErr.message);
-    }
+  let fileUrl;
+  let publicId;
+
+  try {
+    const uploadResult = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: 'ai-interview/resumes', resource_type: 'auto', public_id: `resume-${Date.now()}` },
+        (error, result) => (error ? reject(error) : resolve(result))
+      );
+      stream.end(buffer);
+    });
+    fileUrl = uploadResult.secure_url;
+    publicId = uploadResult.public_id;
+  } catch (cloudErr) {
+    return next(new AppError(`File upload failed: ${cloudErr.message}`, 500));
   }
 
   // Extract text from PDF for AI context
@@ -89,7 +67,6 @@ exports.uploadResume = async (req, res, next) => {
 
   try {
     if (mimetype === 'application/pdf' || (originalname && originalname.toLowerCase().endsWith('.pdf'))) {
-      const buffer = fs.readFileSync(localFilePath);
       const rawText = await extractTextFromPdfBuffer(buffer);
       extractedText = rawText?.slice(0, 8000) ?? null; // Limit to 8k chars
       parseStatus = extractedText ? 'parsed' : 'failed';
@@ -113,7 +90,7 @@ exports.uploadResume = async (req, res, next) => {
 
   const resume = await Resume.create({
     userId: req.user._id,
-    fileName: filename,
+    fileName: publicId,
     originalName: originalname,
     fileUrl,
     publicId,
@@ -149,20 +126,8 @@ exports.deleteResume = async (req, res, next) => {
 
   // Delete from Cloudinary if remote
   try {
-    if (resume.publicId && !resume.publicId.startsWith('resume-')) {
+    if (resume.publicId) {
       await cloudinary.uploader.destroy(resume.publicId, { resource_type: 'auto' });
-    }
-  } catch {
-    // Non-fatal
-  }
-
-  // Delete local file if it exists
-  try {
-    if (resume.fileName) {
-      const localPath = path.join(__dirname, '../../uploads/resumes', resume.fileName);
-      if (fs.existsSync(localPath)) {
-        fs.unlinkSync(localPath);
-      }
     }
   } catch {
     // Non-fatal
@@ -188,22 +153,6 @@ exports.setDefaultResume = async (req, res, next) => {
 exports.parseResume = async (req, res, next) => {
   const resume = await Resume.findOne({ _id: req.params.id, userId: req.user._id });
   if (!resume) return next(new AppError('Resume not found.', 404));
-
-  // Self-heal: if extractedText is missing, try reading local file and extracting
-  if (!resume.extractedText && resume.fileName) {
-    const localPath = path.join(__dirname, '../../uploads/resumes', resume.fileName);
-    if (fs.existsSync(localPath)) {
-      try {
-        const buffer = fs.readFileSync(localPath);
-        const rawText = await extractTextFromPdfBuffer(buffer);
-        resume.extractedText = rawText?.slice(0, 8000) ?? null;
-        resume.parseStatus = resume.extractedText ? 'parsed' : 'failed';
-        await resume.save();
-      } catch (extractErr) {
-        console.warn('[ResumeParse] Failed to re-extract text:', extractErr.message);
-      }
-    }
-  }
 
   if (!resume.extractedText) {
     return next(new AppError('No text extracted from this resume. Upload a valid PDF.', 400));

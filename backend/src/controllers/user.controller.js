@@ -45,58 +45,30 @@ exports.uploadAvatar = async (req, res, next) => {
     return next(new AppError('Please select an image to upload.', 400));
   }
 
-  const { filename, path: localFilePath } = req.file;
+  const { buffer } = req.file;
 
-  const baseUrl = `${req.protocol}://${req.get('host')}`;
-  let avatarUrl = `${baseUrl}/uploads/avatars/${filename}`;
+  if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+    return next(new AppError('File storage is not configured on the server (missing Cloudinary credentials).', 500));
+  }
 
-  // Attempt Cloudinary upload if configured — gracefully falls back to local storage.
-  // The wrapper function ensures that ANY stream error event (including ones emitted
-  // after the Promise has already settled) is always consumed by a listener so Node
-  // never sees an unhandled 'error' event that would crash the process.
-  if (process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET) {
-    const tryCloudinaryUpload = () =>
-      new Promise((resolve, reject) => {
-        let settled = false;
+  let avatarUrl;
 
-        // After first settlement, further calls become silent noops —
-        // but the listener REMAINS attached so the stream/readStream never
-        // emits an unhandled 'error' event.
-        const onError = (err) => { if (!settled) { settled = true; reject(err); } };
-        const onResult = (err, result) => {
-          if (err) return onError(err);
-          if (!settled) { settled = true; resolve(result); }
-        };
-
-        const stream = cloudinary.uploader.upload_stream(
-          {
-            folder: 'ai-interview/avatars',
-            resource_type: 'image',
-            transformation: [{ width: 400, height: 400, crop: 'fill', gravity: 'face' }],
-            public_id: `avatar-${req.user._id}-${Date.now()}`,
-          },
-          onResult
-        );
-
-        // Permanent listeners — still active after settlement, so no unhandled events.
-        stream.on('error', onError);
-
-        const readStream = fs.createReadStream(localFilePath);
-        readStream.on('error', onError);
-        readStream.pipe(stream);
-      });
-
-    try {
-      const result = await tryCloudinaryUpload();
-      if (result && result.secure_url) {
-        avatarUrl = result.secure_url;
-        // Remove local temp file after a successful Cloudinary upload
-        try { fs.unlinkSync(localFilePath); } catch (_) {}
-      }
-    } catch (cloudErr) {
-      console.warn('[AvatarUpload] Cloudinary upload skipped, using local storage:', cloudErr.message);
-      // Local file is kept as the fallback — nothing to clean up
-    }
+  try {
+    const result = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          folder: 'ai-interview/avatars',
+          resource_type: 'image',
+          transformation: [{ width: 400, height: 400, crop: 'fill', gravity: 'face' }],
+          public_id: `avatar-${req.user._id}-${Date.now()}`,
+        },
+        (error, result) => (error ? reject(error) : resolve(result))
+      );
+      stream.end(buffer);
+    });
+    avatarUrl = result.secure_url;
+  } catch (cloudErr) {
+    return next(new AppError(`Avatar upload failed: ${cloudErr.message}`, 500));
   }
 
   const user = await User.findByIdAndUpdate(
