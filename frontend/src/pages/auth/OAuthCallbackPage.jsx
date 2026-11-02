@@ -10,7 +10,7 @@ import toast from 'react-hot-toast';
  * The backend's OAuth callback redirects here as:
  *   /oauth-callback#accessToken=...&refreshToken=...
  * (tokens are in the URL *fragment*, not query string, so they're
- * never sent to any server or captured in access logs)
+ * never sent to any server or captured in access logs)gi
  *
  * or on failure:
  *   /login?oauthError=<message>

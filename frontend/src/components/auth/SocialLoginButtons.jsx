@@ -24,26 +24,6 @@ const PROVIDERS = [
       </svg>
     ),
   },
-  {
-    id: 'github',
-    label: 'GitHub',
-    href: `${API_BASE}/auth/github`,
-    icon: (
-      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.38 7.86 10.9.57.1.78-.25.78-.55 0-.27-.01-1.16-.02-2.11-3.2.7-3.88-1.36-3.88-1.36-.52-1.34-1.28-1.69-1.28-1.69-1.04-.72.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.7 1.25 3.36.95.1-.75.4-1.25.73-1.53-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.77.12 3.06.74.81 1.19 1.83 1.19 3.09 0 4.41-2.7 5.38-5.27 5.67.42.36.78 1.07.78 2.16 0 1.56-.02 2.82-.02 3.2 0 .31.2.67.79.55A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'linkedin',
-    label: 'LinkedIn',
-    href: `${API_BASE}/auth/linkedin`,
-    icon: (
-      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="#0A66C2">
-        <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"/>
-      </svg>
-    ),
-  },
 ];
 
 export default function SocialLoginButtons() {
@@ -55,7 +35,7 @@ export default function SocialLoginButtons() {
         <div className="h-px flex-1 bg-slate-300 dark:bg-slate-700/60" />
       </div>
 
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 gap-3">
         {PROVIDERS.map((p) => (
           <a
             key={p.id}
@@ -63,7 +43,7 @@ export default function SocialLoginButtons() {
             className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white dark:bg-[#080d1a]/85 border border-slate-300 dark:border-slate-700/70 text-slate-700 dark:text-slate-200 text-xs font-medium transition-all active:scale-[0.97] hover:border-slate-400 dark:hover:border-slate-400/70 shadow-sm dark:shadow-none"
           >
             {p.icon}
-            <span className="hidden sm:inline">{p.label}</span>
+            <span>{p.label}</span>
           </a>
         ))}
       </div>
